@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="plant">
   <head>
-    <title>Chat Example</title>
+    <title>Bubble Chat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
@@ -10,45 +10,9 @@
         padding-top: 60px;
       }
     </style>
-    <script>
-      function ChatController($scope) {
-        var socket = io.connect();
-
-        $scope.messages = [];
-        $scope.roster = [];
-        $scope.name = '';
-        $scope.text = '';
-        $scope.oldMessages = '';
-        
-        
-        socket.on('connect', function () {
-          $scope.setName();
-        });
-
-        socket.on('message', function (msg) {
-          $scope.messages.push(msg);
-          $scope.$apply();
-        });
-
-        socket.on('roster', function (names) {
-          $scope.roster = names;
-          $scope.oldMessages = names;
-          $scope.$apply();
-        });
-
-        $scope.send = function send() {
-          console.log('Sending message:', $scope.text);
-          socket.emit('message', $scope.text);
-          $scope.text = '';
-        };
-
-        $scope.setName = function setName() {
-          socket.emit('identify', $scope.name);
-        };
-      }
-    </script>
   </head>
   <body>
+    
     <div class="container" ng-controller="ChatController">
       <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="navbar-inner">
@@ -58,7 +22,7 @@
         </div>
       </div>
       <div class="page-header">
-        <h1>Chat Example</h1>
+        <h1>Bubble Chat</h1>
       </div>
       <div class="row">
         <div class="span3">
@@ -69,7 +33,7 @@
           </ul>
         </div>
         <div class="span9">
-          <table class="table table-striped table-bordered">
+          <!--<table class="table table-striped table-bordered">
             <thead>
               <tr>
                 <th class="span2">Name</th>
@@ -82,15 +46,17 @@
                 <td class="span7" ng-bind="msg.text"></td>
               </tr>
             </tbody>
-          </table>
+          </table>-->
           <div class="row controls">
             <form ng-submit="send()">
+              <div class="span12"><h3>Type your name, send your message and let's dance bubbles !</h3></div>
               <div class="span2"><input type="text" class="input-block-level" ng-model="name" ng-change="setName()" placeholder="Your Name"></div>
               <div class="input-append span7">
                 <input type="text" class="span6" ng-model="text" placeholder="Message">
                 <input type="submit" class="span1 btn btn-primary" value="Send" ng-disabled="!text">
               </div>
             </form>
+            <canvas-render messages="messages"></canvas-render>
           </div>
         </div>
       </div>
@@ -100,6 +66,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/createjs.js"></script>
+    <script src="/js/tween.js"></script>
     <script src="/js/angular.min.js"></script>
+    <script src="/js/growing-plant.app.js"></script>
   </body>
 </html>
