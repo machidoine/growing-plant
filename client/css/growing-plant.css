@@ -1,0 +1,45 @@
+.grid{
+    position:relative;
+    width:750px;
+    height:750px;
+    background-color:#fff;
+    border:1px solid #000;
+    background-size: 15px 15px;    
+    background-image:repeating-linear-gradient(0deg, #e2e2e2, #e2e2e2 1px, transparent 1px, transparent 40px),repeating-linear-gradient(-90deg, #e2e2e2, #e2e2e2 1px, transparent 1px, transparent 40px);
+}
+
+.grid:after{
+    content:" ";
+    display:table;
+    clear:left;
+}
+
+.grid-element{
+    position:absolute;
+    width:15px;
+    height:15px;
+    float:left;
+    background-color:#fff;
+    line-height:80px;
+    text-align:center;
+}
+
+.cell-empty{
+    
+}
+
+.cell-seed{
+    background-color:#ff0000;
+}
+
+.blue{
+    background-color:#0000ff;
+}
+
+.red{
+    background-color:#ff0000;
+}
+
+.black{
+    background-color:#000000;
+}
