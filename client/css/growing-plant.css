@@ -1,3 +1,7 @@
+body {
+    padding-top: 60px;
+}
+
 .grid{
     position:relative;
     width:750px;
@@ -24,22 +28,48 @@
     text-align:center;
 }
 
-.cell-empty{
-    
-}
-
 .cell-seed{
-    background-color:#ff0000;
+    background-color:maroon;
 }
 
-.blue{
-    background-color:#0000ff;
+.cell-tutor{
+    background-color:blue;
 }
 
-.red{
-    background-color:#ff0000;
+.cell-fork{
+    background-color:greenyellow;
 }
 
-.black{
-    background-color:#000000;
+.menu-items{
+    height:120px;
+    width:750px;
+}
+
+.menu-items ul{
+    list-style:none;
+    margin-left:0;
+}
+
+.menu-items li{
+    width:60px;
+    height:60px;
+    background-color:#e5e5e5;
+    float:left;
+    border:5px transparent solid;
+}
+
+.menu-items li.active{
+    border-color:black;
+}
+
+.menu-items .menu-item-seed{
+    background-color:maroon;
+}
+
+.menu-items .menu-item-tutor{
+    background-color:blue;
+}
+
+.menu-items .menu-item-fork{
+    background-color:greenyellow;
 }

@@ -6,17 +6,13 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
     <link rel="stylesheet" href="/css/growing-plant.css">
-    <style>
-
-body {
-    padding-top: 60px;
-}
-</style>
   </head>
   <body>
     
-    <div class="grid" ng-controller="GrowingPlantController">      
-          
+    <div ng-controller="GrowingPlantController">
+      <gp-grid grid="grid" current-item-selected="menuModel.currentItem" click-on-grid="send"></gp-grid>
+    
+      <gp-menu-items menu-model="menuModel"></gp-menu-items>
     </div>
     
     <script src="/socket.io/socket.io.js">
@@ -29,9 +25,9 @@ body {
 </script>
     <script src="/js/tween.js">
 </script>
-    <!--<script src="/js/angular.min.js">
-</script>-->
-    <script src="/js/growing-plant-jquery.js">
+    <script src="/js/angular.min.js">
+</script>
+    <script src="/js/growing-plant.app.js">
 </script>
   </body>
 </html>

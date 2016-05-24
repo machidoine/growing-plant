@@ -1,0 +1,10 @@
+<nav class="menu-items">
+    <ul>
+        <li ng-repeat="item in menuModel.items"
+            ng-click="menuModel.currentItem = item"
+            class="menu-item-{{item.type}}"
+            ng-class="{active : menuModel.currentItem.type == item.type}">
+        </li>    
+    </ul>
+</nav>
+{{menuModel}}
