@@ -4,7 +4,7 @@
   "description": "A game with plants",
   "main": "server.js",
   "repository": "",
-  "author": "ThuesdayTeam",
+  "author": "ThuesdayDevTeam",
   "dependencies": {
     "async": "~0.2.8",
     "express": "~3.2.4",
@@ -16,7 +16,6 @@
     "gulp-coffee": "^2.3.2",
     "gulp-concat": "latest",
     "gulp-connect": "latest",
-    "gulp-livereload": "^3.8.1",
     "gulp-sass": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest"
