@@ -1,10 +1,10 @@
 {
-  "name": "chat-example",
-  "version": "0.0.0",
-  "description": "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
+  "name": "growing-plant",
+  "version": "0.0.1",
+  "description": "A game with plants",
   "main": "server.js",
   "repository": "",
-  "author": "Mostafa Eweda <mo.eweda@gmail.com>",
+  "author": "ThuesdayTeam",
   "dependencies": {
     "async": "~0.2.8",
     "express": "~3.2.4",
@@ -12,7 +12,13 @@
     "socket.io": "~0.9.14"
   },
   "devDependencies": {
-    "bower": "^1.7.9",
-    "gulp-sass": "^2.3.1"
+    "gulp": "latest",
+    "gulp-coffee": "^2.3.2",
+    "gulp-concat": "latest",
+    "gulp-connect": "latest",
+    "gulp-livereload": "^3.8.1",
+    "gulp-sass": "latest",
+    "gulp-uglify": "latest",
+    "gulp-util": "latest"
   }
 }

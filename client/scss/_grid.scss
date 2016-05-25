@@ -1,0 +1,44 @@
+$grid-border-color:#e2e2e2;
+
+.grid{
+    position:relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width:$grid-width;
+    height:$grid-height;
+    background-color:#fff;
+    border:1px solid $grid-border-color;
+    background-size: $grid-cell-size $grid-cell-size;    
+    background-image:repeating-linear-gradient(0deg, $grid-border-color, $grid-border-color 1px, 
+        transparent 1px, transparent $grid-cell-size),
+        repeating-linear-gradient(-90deg, $grid-border-color, $grid-border-color 1px, 
+        transparent 1px, transparent $grid-cell-size);
+    
+    &:after{
+        content:" ";
+        display:table;
+        clear:left;
+    }
+}
+
+.grid-element{
+    position:absolute;
+    width:$grid-cell-size;
+    height:$grid-cell-size;
+    float:left;
+    background-color:#fff;
+    line-height:$grid-cell-size;
+    text-align:center;
+}
+
+.cell-seed{
+    background-color:$color-seed;
+}
+
+.cell-tutor{
+    background-color:$color-tutor;
+}
+
+.cell-fork{
+    background-color:$color-fork;
+}

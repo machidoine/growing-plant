@@ -1,75 +1,65 @@
+.grid {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 750px;
+  height: 750px;
+  background-color: #fff;
+  border: 1px solid #e2e2e2;
+  background-size: 15px 15px;
+  background-image: repeating-linear-gradient(0deg, #e2e2e2, #e2e2e2 1px, transparent 1px, transparent 15px), repeating-linear-gradient(-90deg, #e2e2e2, #e2e2e2 1px, transparent 1px, transparent 15px); }
+  .grid:after {
+    content: " ";
+    display: table;
+    clear: left; }
+
+.grid-element {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  float: left;
+  background-color: #fff;
+  line-height: 15px;
+  text-align: center; }
+
+.cell-seed {
+  background-color: #916818; }
+
+.cell-tutor {
+  background-color: #0a788c; }
+
+.cell-fork {
+  background-color: #568c0a; }
+
+.menu-items {
+  position: relative;
+  height: 120px;
+  width: 750px;
+  left: 50%;
+  transform: translateX(-50%); }
+
+.menu-items ul {
+  list-style: none;
+  margin-left: 0; }
+
+.menu-items li {
+  height: 60px;
+  width: 60px;
+  background-color: #e5e5e5;
+  float: left;
+  border: 5px transparent solid; }
+
+.menu-items li.active {
+  border-color: black; }
+
+.menu-items .menu-item-seed {
+  background-color: #916818; }
+
+.menu-items .menu-item-tutor {
+  background-color: #0a788c; }
+
+.menu-items .menu-item-fork {
+  background-color: #568c0a; }
+
 body {
-    padding-top: 60px;
-}
-
-.grid{
-    position:relative;
-    width:750px;
-    height:750px;
-    background-color:#fff;
-    border:1px solid #000;
-    background-size: 15px 15px;    
-    background-image:repeating-linear-gradient(0deg, #e2e2e2, #e2e2e2 1px, transparent 1px, transparent 40px),repeating-linear-gradient(-90deg, #e2e2e2, #e2e2e2 1px, transparent 1px, transparent 40px);
-}
-
-.grid:after{
-    content:" ";
-    display:table;
-    clear:left;
-}
-
-.grid-element{
-    position:absolute;
-    width:15px;
-    height:15px;
-    float:left;
-    background-color:#fff;
-    line-height:80px;
-    text-align:center;
-}
-
-.cell-seed{
-    background-color:maroon;
-}
-
-.cell-tutor{
-    background-color:blue;
-}
-
-.cell-fork{
-    background-color:greenyellow;
-}
-
-.menu-items{
-    height:120px;
-    width:750px;
-}
-
-.menu-items ul{
-    list-style:none;
-    margin-left:0;
-}
-
-.menu-items li{
-    width:60px;
-    height:60px;
-    background-color:#e5e5e5;
-    float:left;
-    border:5px transparent solid;
-}
-
-.menu-items li.active{
-    border-color:black;
-}
-
-.menu-items .menu-item-seed{
-    background-color:maroon;
-}
-
-.menu-items .menu-item-tutor{
-    background-color:blue;
-}
-
-.menu-items .menu-item-fork{
-    background-color:greenyellow;
-}
+  padding-top: 20px; }

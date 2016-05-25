@@ -1,4 +1,4 @@
 <div class="grid" ng-mousemove="onMouseMove($event)">
-    <div class="grid-element cell-{{currentItemSelected.type}}" style="opacity:0.5" ng-hide="placeholderGridItem.type == ''" ng-style="{left:placeholderGridItem.x * 15, top:placeholderGridItem.y * 15}"></div>
+    <div class="grid-element cell-{{currentItemSelected.type}}" style="opacity:0.5; z-index:1" ng-hide="placeholderGridItem.type == ''" ng-style="{left:placeholderGridItem.x * 15, top:placeholderGridItem.y * 15}"></div>
     <div ng-repeat="cell in grid" class="grid-element cell-{{cell.type}}" ng-style="{left:cell.x * 15, top:cell.y * 15}"></div>
 </div>
