@@ -19,6 +19,7 @@ gulp.task('coffee', function() {
 
 gulp.task('watch',function(){
 	gulp.watch('client/scss/**/*.scss', ['sass']);
+	gulp.watch('client/coffee/**/*.coffee', ['coffee']);
 })
 
 gulp.task('default',['sass', 'coffee', 'watch']);

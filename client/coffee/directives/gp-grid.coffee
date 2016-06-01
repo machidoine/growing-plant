@@ -8,7 +8,7 @@ angular.module('plant').directive 'gpGrid', ->
 		restrict: 'E'
 		controller: ($scope, $element) ->
 
-		  $($element).on 'click', (e) ->
+		  $($element).find('.grid').on 'click', (e) ->
 		    posX = e.pageX - ($(this).offset().left)
 		    posY = e.pageY - ($(this).offset().top)
 		    indexX = Math.floor(posX / 15)

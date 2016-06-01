@@ -48,7 +48,7 @@ angular.module('plant').directive('gpGrid', function() {
     },
     restrict: 'E',
     controller: function($scope, $element) {
-      $($element).on('click', function(e) {
+      $($element).find('.grid').on('click', function(e) {
         var indexX, indexY, posX, posY;
         posX = e.pageX - ($(this).offset().left);
         posY = e.pageY - ($(this).offset().top);

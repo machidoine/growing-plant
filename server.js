@@ -27,6 +27,24 @@ var sockets = [];
 var players = {};
 var color = ["blue", "red", "black"];
 
+var Garden = class {
+    constructor() {
+        plants = [];
+    }
+}
+
+var Plant = class {
+    constructor(garden, seed) {
+        this.seed = seed;
+        this.body = [];
+        this.garden = garden;
+    }
+
+    grow() {
+
+    }
+}
+
 var Grid = class {
     constructor(width, height, initialPoints) {
         this.width = width;
@@ -48,6 +66,12 @@ var Grid = class {
         } else {
             this._points[index] = point;
         }
+    }
+
+    getCellByType(type) {
+        return this._points.filter(function(e) {
+           return e.type == type; 
+        });
     }
 
 }
@@ -80,13 +104,17 @@ io.on('connection', function(socket) {
         broadcast('gridElementReceive', grid.points);
     
     });
+
 });
 
-
 setInterval(function() {
-//playGrid[Math.floor(Math.random() * 10000)] = {"type":"seed"};
-//broadcast('gridElementReceive', playGrid);
-}, 200000);
+    var seeds = grid.getCellByType('seed');
+
+    console.log();
+    //broadcast('gridElementReceive', playGrid);
+}, 1000);
+
+
 
 function broadcast(event, data) {
     sockets.forEach(function(socket) {
