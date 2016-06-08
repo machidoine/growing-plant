@@ -1,3 +1,4 @@
+
 'use strict'
 //
 // # SimpleServer
@@ -28,35 +29,103 @@ var players = {};
 var color = ["blue", "red", "black"];
 
 var Garden = class {
-    constructor() {
-        plants = [];
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
+        this._plants = [];
+        this.boundaries = new GardenBoundaries(this);
     }
-}
+
+    addPlant(seed){
+        this._plants.push(new Plant(this, seed));
+    }
+
+    get plants(){
+        return this._plants;
+    }
+
+    allowAddHere(point){
+        var plantNotElementPresent = this._plants.findIndex(function(plant){
+            var seedPresent = plant.seed.x === point.x && plant.seed.y === point.y;
+            console.log('seedPresent', seedPresent);
+            var bodyPresent = (plant.body.findIndex(function(body){
+                    return body.x === point.x && body.y === point.y
+                }));
+
+            console.log('bodyPresent', bodyPresent);
+            return seedPresent && bodyPresent < 0;
+        });
+
+        console.log('plantNotElementPresent',plantNotElementPresent);
+
+        return plantNotElementPresent && this.boundaries.isIn(point);
+    }
+};
 
 var Plant = class {
     constructor(garden, seed) {
         this.seed = seed;
         this.body = [];
         this.garden = garden;
+        this.lastBody = this.seed;
+        this.direction = "up";
     }
 
     grow() {
+        var newBody = Object.assign({}, this.lastBody);
+        newBody.type = "plant-body";
+        newBody.y = newBody.y - 1;
 
+        if(garden.allowAddHere({x:newBody.x, y:newBody.y})) {
+            this.body.push(newBody);
+            this.lastBody = newBody;
+        }
     }
-}
+};
+
+var GardenGridConvertor = class{
+    static toGrid(garden){
+        var grid = new Grid(50, 50, null);
+        garden.plants.forEach(function(plant){
+            grid.addPoint(plant.seed);
+            plant.body.forEach(function(body){
+                grid.addPoint(body);
+            })
+        });
+        return grid;
+    }
+};
+
+var GardenBoundaries = class {
+    constructor(garden){
+        this.garden = garden;
+    }
+
+    isOut(point) {
+        if(point.x > garden.width || point.y > garden.height || point.x < 0 || point.y < 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    isIn(point) {
+        return ! this.isOut(point);
+    }
+};
 
 var Grid = class {
-    constructor(width, height, initialPoints) {
+    constructor(width, height) {
         this.width = width;
         this.height = height;
-        this._points = initialPoints;
+        this._points = [];
     }
 
     get points() {
         return this._points;
     }
 
-    addPoints(point) {
+    addPoint(point) {
         var index = this._points.findIndex(function(element){
             return element.x === point.x && element.y === point.y;
         });
@@ -76,14 +145,11 @@ var Grid = class {
 
 }
 
-var initialPoints = [];
-for(let i = 0; i < 50; i++) {
-    for(let j = 0; j < 49; j++) {
-        initialPoints.push({"x":i, "y":j, "type":"seed"});
-    }
-}
-initialPoints = [{"x":100, "y":100, "type":"seed"}]
-var grid = new Grid(50, 50, initialPoints);
+//var initialPoints = [];
+//initialPoints = [{"x":0, "y":0, "type":"seed"}];
+var grid = new Grid(50, 50);
+var garden = new Garden(50, 50);
+garden.addPlant({"x":2, "y":20, "type":"seed"});
 
 io.on('connection', function(socket) {
     sockets.push(socket);
@@ -97,20 +163,22 @@ io.on('connection', function(socket) {
     });
     
     socket.on('addGridElement', function(gridElement) {
-        console.log(socket);
         gridElement.color = players[socket.id].color;
-        console.log(players);
-        grid.addPoints(gridElement);
-        broadcast('gridElementReceive', grid.points);
-    
+        if(gridElement.type === 'seed'){
+            garden.addPlant(gridElement);
+        }
+        var grid = GardenGridConvertor.toGrid(garden);
+        console.log(grid);
+        broadcast('gridElementReceive', grid.points );
     });
 
 });
 
 setInterval(function() {
-    var seeds = grid.getCellByType('seed');
-
-    console.log();
+    garden.plants.forEach(function(el){
+        el.grow();
+    })
+    var grid = GardenGridConvertor.toGrid(garden);
     broadcast('gridElementReceive', grid.points);
 }, 1000);
 
