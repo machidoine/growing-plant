@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="plant">
+<html lang="en">
   <head>
     <title>Growing Plant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +9,18 @@
   </head>
   <body>
     
-    <div ng-controller="GrowingPlantController">
-      <gp-grid grid="grid" current-item-selected="menuModel.currentItem" click-on-grid="send"></gp-grid>
-      <gp-menu-items menu-model="menuModel"></gp-menu-items>
-    </div>
+	with phaser.js
     
     <script src="/socket.io/socket.io.js">
 </script>
     <script src="/js/vendors/jquery.min.js">
 </script>
+<script src="/js/vendors/phaser.js"></script>
     <script src="/js/vendors/bootstrap.min.js">
 </script>
-    <script src="/js/vendors/createjs.js">
+    <script src="/js/growing-plant.phaser.app.js">
 </script>
-    <script src="/js/vendors/tween.js">
-</script>
-    <script src="/js/vendors/angular.min.js">
-</script>
-    <script src="/js/growing-plant.app.js">
+    
 </script>
   </body>
 </html>

@@ -82,7 +82,7 @@ for(let i = 0; i < 50; i++) {
         initialPoints.push({"x":i, "y":j, "type":"seed"});
     }
 }
-initialPoints = [{"x":0, "y":0, "type":"seed"}]
+initialPoints = [{"x":100, "y":100, "type":"seed"}]
 var grid = new Grid(50, 50, initialPoints);
 
 io.on('connection', function(socket) {
@@ -111,7 +111,7 @@ setInterval(function() {
     var seeds = grid.getCellByType('seed');
 
     console.log();
-    //broadcast('gridElementReceive', playGrid);
+    broadcast('gridElementReceive', grid.points);
 }, 1000);
 
 
