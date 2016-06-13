@@ -1,0 +1,36 @@
+{"frames": {
+"seed":
+{
+	"frame": {"x":0,"y":0,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":25},
+	"sourceSize": {"w":25,"h":25}
+},
+"plant-body":
+{
+	"frame": {"x":25,"y":0,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":25},
+	"sourceSize": {"w":25,"h":25}
+},
+"fork":
+{
+	"frame": {"x":50,"y":0,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":25},
+	"sourceSize": {"w":25,"h":25}
+}
+},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "growing-plant-spritesheet.png",
+	"format": "RGBA8888",
+	"size": {"w":500,"h":75},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:a12d042c8df389efb88ea09fd76942c5:1e240ffed241fc58aca26b0e5d350d80:a1ac42a292480379863f711d5e64cebf$"
+}
+}
