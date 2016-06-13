@@ -47,16 +47,16 @@ var Garden = class {
     allowAddHere(point){
         var plantNotElementPresent = this._plants.findIndex(function(plant){
             var seedPresent = plant.seed.x === point.x && plant.seed.y === point.y;
-            console.log('seedPresent', seedPresent);
+            //console.log('seedPresent', seedPresent);
             var bodyPresent = (plant.body.findIndex(function(body){
                     return body.x === point.x && body.y === point.y
                 }));
 
-            console.log('bodyPresent', bodyPresent);
+            //console.log('bodyPresent', bodyPresent);
             return seedPresent && bodyPresent < 0;
         });
 
-        console.log('plantNotElementPresent',plantNotElementPresent);
+        //console.log('plantNotElementPresent',plantNotElementPresent);
 
         return plantNotElementPresent && this.boundaries.isIn(point);
     }
