@@ -73,7 +73,7 @@ var Plant = class {
 
     grow() {
         var newBody = Object.assign({}, this.lastBody);
-        newBody.type = "plant-body";
+        newBody.type = "plant-body-team2";
         newBody.y = newBody.y - 1;
 
         if(garden.allowAddHere({x:newBody.x, y:newBody.y})) {
@@ -149,7 +149,7 @@ var Grid = class {
 //initialPoints = [{"x":0, "y":0, "type":"seed"}];
 var grid = new Grid(50, 50);
 var garden = new Garden(50, 50);
-garden.addPlant({"x":2, "y":20, "type":"seed"});
+garden.addPlant({"x":2, "y":20, "type":"seed-team2"});
 
 io.on('connection', function(socket) {
     sockets.push(socket);
@@ -164,7 +164,7 @@ io.on('connection', function(socket) {
     
     socket.on('addGridElement', function(gridElement) {
         gridElement.color = players[socket.id].color;
-        if(gridElement.type === 'seed'){
+        if(gridElement.type === 'seed-team2'){
             garden.addPlant(gridElement);
         }
         var grid = GardenGridConvertor.toGrid(garden);
