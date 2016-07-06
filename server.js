@@ -21,46 +21,69 @@ var express = require('express');
 var router = express();
 var server = http.createServer(router);
 var io = socketio.listen(server);
+io.set('log level', 1);
 
 router.use(express.static(path.resolve(__dirname, 'client')));
 
 var sockets = [];
 var players = {};
 var color = ["blue", "red", "black"];
+var team = ["team1", "team2", "team3"];
 
 var Garden = class {
-    constructor(width, height) {
+    constructor(width, height, plantGrid) {
         this.width = width;
         this.height = height;
-        this._plants = [];
         this.boundaries = new GardenBoundaries(this);
+        this._plantGrid = plantGrid;
+        this._plants = [];
     }
 
-    addPlant(seed){
-        this._plants.push(new Plant(this, seed));
+    addSeed(seed){
+        
+        if(this.allowAddHere(seed.position)) {
+            console.log('addSeed');
+            var start = new Date().getTime();
+
+            this._plantGrid.addPoint(seed);
+
+            this._plants.push(new Plant(this, seed));
+             // or ?
+            this._plants[this.getIndex(seed.position)] = new Plant(this, seed);
+
+            var end = new Date().getTime();
+            var elapse = end - start;
+            console.log('push plant : ' + elapse);
+        }        
+    }
+
+    addBody(body) {
+        this._plantGrid.addPoint(body);
+    }
+
+    getIndex(position) {
+        return position.y * this.width + position.x;
     }
 
     get plants(){
         return this._plants;
     }
 
+    get plantGrid() {
+        return this._plantGrid;
+    }
+
     allowAddHere(point){
-        var plantNotElementPresent = this._plants.findIndex(function(plant){
-            var seedPresent = plant.seed.x === point.x && plant.seed.y === point.y;
-            //console.log('seedPresent', seedPresent);
-            var bodyPresent = (plant.body.findIndex(function(body){
-                    return body.x === point.x && body.y === point.y
-                }));
-
-            //console.log('bodyPresent', bodyPresent);
-            return seedPresent && bodyPresent < 0;
-        });
-
-        //console.log('plantNotElementPresent',plantNotElementPresent);
-
-        return plantNotElementPresent && this.boundaries.isIn(point);
+        return typeof this._plantGrid.getPoint(point) === 'undefined' && this.boundaries.isIn(point);
     }
 };
+
+var directions = {
+    "up" : {x:0, y:-1},
+    "down" : {x:0, y:1},
+    "left" : {x:-1, y:0},
+    "right" : {x:1, y:0}
+}
 
 var Plant = class {
     constructor(garden, seed) {
@@ -68,31 +91,42 @@ var Plant = class {
         this.body = [];
         this.garden = garden;
         this.lastBody = this.seed;
-        this.direction = "up";
+        this.direction = seed.direction;
     }
 
     grow() {
-        var newBody = Object.assign({}, this.lastBody);
-        newBody.type = "plant-body-team2";
-        newBody.y = newBody.y - 1;
+        var start = new Date().getTime();
 
-        if(garden.allowAddHere({x:newBody.x, y:newBody.y})) {
+        var newBody = JSON.parse(JSON.stringify(this.lastBody));
+        newBody.type = "plant-body";
+        
+        newBody.position = this.translate(newBody.position, this.direction);
+
+        if(garden.allowAddHere(newBody.position)) {
+            this.garden.addBody(newBody);
             this.body.push(newBody);
             this.lastBody = newBody;
         }
+
+        var end = new Date().getTime();
+        var elapse = end - start;
+        //console.log('plant grow : ' + elapse);
+    }
+
+    translate(position, direction) {
+        var d = directions[direction];
+        position.x += d.x;
+        position.y += d.y;
+        return position;
     }
 };
 
+
+
+
 var GardenGridConvertor = class{
     static toGrid(garden){
-        var grid = new Grid(50, 50, null);
-        garden.plants.forEach(function(plant){
-            grid.addPoint(plant.seed);
-            plant.body.forEach(function(body){
-                grid.addPoint(body);
-            })
-        });
-        return grid;
+        return garden.plantGrid.points;
     }
 };
 
@@ -119,22 +153,33 @@ var Grid = class {
         this.width = width;
         this.height = height;
         this._points = [];
+        this.initPoints();
+    }
+
+    initPoints() {
+        for(var i = 0; i < this.width; i++) {
+            for(var j = 0; j < this.height; j++) {
+                this._points.push(undefined);
+            }
+        }
     }
 
     get points() {
-        return this._points;
+        var p = [];
+        this._points.forEach(function(e){
+           if(typeof e !== 'undefined') {
+               p.push(e);
+           } 
+        });
+        return p;
+    }
+
+    getPoint(position) {
+        return this._points[this.getIndex(position)];
     }
 
     addPoint(point) {
-        var index = this._points.findIndex(function(element){
-            return element.x === point.x && element.y === point.y;
-        });
-
-        if(index < 0) {
-            this._points.push(point);    
-        } else {
-            this._points[index] = point;
-        }
+        this._points[this.getIndex(point.position)] = point;
     }
 
     getCellByType(type) {
@@ -143,33 +188,44 @@ var Grid = class {
         });
     }
 
+    getIndex(position) {
+        return position.y * this.width + position.x;
+    }
+
 }
 
 //var initialPoints = [];
 //initialPoints = [{"x":0, "y":0, "type":"seed"}];
-var grid = new Grid(50, 50);
-var garden = new Garden(50, 50);
-garden.addPlant({"x":2, "y":20, "type":"seed-team2"});
+var garden = new Garden(32, 24, new Grid(32, 24));
+garden.addSeed({'position':{'x':2, 'y':20},direction:"down", 'type':'seed', 'team':'team3'});
 
 io.on('connection', function(socket) {
     sockets.push(socket);
     players[socket.id] = {};
     players[socket.id].color = color[Math.floor(Math.random() * 3)];
+    players[socket.id].team = team[Math.floor(Math.random() * 3)];
 
-    socket.emit('myConnect', grid.points);
+    socket.emit('myConnect', GardenGridConvertor.toGrid(garden));
     
     socket.on('disconnect', function() {
         sockets.splice(sockets.indexOf(socket), 1);
     });
     
     socket.on('addGridElement', function(gridElement) {
+        var start = new Date().getTime();
         gridElement.color = players[socket.id].color;
-        if(gridElement.type === 'seed-team2'){
-            garden.addPlant(gridElement);
+        if(gridElement.type === 'seed'){
+            gridElement.team = players[socket.id].team;
+            gridElement.direction = ["up", "down", "right", "left"][Math.floor(Math.random() * 4)];
+            garden.addSeed(gridElement);
         }
         var grid = GardenGridConvertor.toGrid(garden);
-        console.log(grid);
-        broadcast('gridElementReceive', grid.points );
+        //console.log(grid);
+        broadcast('gridElementReceive', grid);
+        var end = new Date().getTime();
+
+        var elapse = end - start;
+        console.log('addGridElement : ' + elapse);
     });
 
 });
@@ -179,7 +235,8 @@ setInterval(function() {
         el.grow();
     })
     var grid = GardenGridConvertor.toGrid(garden);
-    broadcast('gridElementReceive', grid.points);
+
+    broadcast('gridElementReceive', grid);
 }, 1000);
 
 
