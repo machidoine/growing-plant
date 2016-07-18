@@ -37,6 +37,8 @@ var Garden = class {
         this.boundaries = new GardenBoundaries(this);
         this._plantGrid = plantGrid;
         this._plants = [];
+        this._stems = [];
+        this._stemGrid = new Grid(width, height);
     }
 
     addSeed(seed){
@@ -57,6 +59,12 @@ var Garden = class {
         }        
     }
 
+    addStem(stem) {
+        if(this.allowAddHere(stem.position)) {
+            this._stemGrid.addPoint(stem);
+        }
+    }
+
     addBody(body) {
         this._plantGrid.addPoint(body);
     }
@@ -69,8 +77,23 @@ var Garden = class {
         return this._plants;
     }
 
+    consumeStem(element) {
+        var stem = this._stemGrid.getPoint(element.position);
+
+        if(typeof stem !== 'undefined' && stem.team === element.team) {
+            this._stemGrid.removePoint(stem);
+            return stem.direction;
+        }
+
+        return element.direction;
+    }
+
     get plantGrid() {
         return this._plantGrid;
+    }
+
+    get stemGrid() {
+        return this._stemGrid;
     }
 
     allowAddHere(point){
@@ -103,8 +126,15 @@ var Plant = class {
         newBody.position = this.translate(newBody.position, this.direction);
 
         if(garden.allowAddHere(newBody.position)) {
+            var direction = this.garden.consumeStem(newBody);
+            newBody.direction = direction;
+            this.direction = direction;
             this.garden.addBody(newBody);
             this.body.push(newBody);
+            if(this.lastBody.type !== 'seed') {
+                this.lastBody.type = 'plant-body';
+            }            
+            newBody.type = 'plant-head';
             this.lastBody = newBody;
         }
 
@@ -122,11 +152,9 @@ var Plant = class {
 };
 
 
-
-
 var GardenGridConvertor = class{
     static toGrid(garden){
-        return garden.plantGrid.points;
+        return garden.plantGrid.points.concat(garden.stemGrid.points);
     }
 };
 
@@ -136,7 +164,7 @@ var GardenBoundaries = class {
     }
 
     isOut(point) {
-        if(point.x > garden.width || point.y > garden.height || point.x < 0 || point.y < 0) {
+        if(point.x >= garden.width || point.y >= garden.height || point.x < 0 || point.y < 0) {
             return true;
         }
 
@@ -192,6 +220,13 @@ var Grid = class {
         return position.y * this.width + position.x;
     }
 
+    removePoint(point) {
+        console.log('removePoint');
+        console.log(this.points);
+        this._points[this.getIndex(point.position)] = undefined;
+        console.log(this.points);
+    }
+
 }
 
 //var initialPoints = [];
@@ -213,12 +248,16 @@ io.on('connection', function(socket) {
     
     socket.on('addGridElement', function(gridElement) {
         var start = new Date().getTime();
+
         gridElement.color = players[socket.id].color;
+        gridElement.team = players[socket.id].team;
+
         if(gridElement.type === 'seed'){
-            gridElement.team = players[socket.id].team;
-            gridElement.direction = ["up", "down", "right", "left"][Math.floor(Math.random() * 4)];
             garden.addSeed(gridElement);
+        } else if(gridElement.type === 'stem'){
+            garden.addStem(gridElement);
         }
+
         var grid = GardenGridConvertor.toGrid(garden);
         //console.log(grid);
         broadcast('gridElementReceive', grid);

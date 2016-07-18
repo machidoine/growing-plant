@@ -90,7 +90,6 @@ $(document).ready(function(){
         });
         socket.on('gridElementReceive', function(gridReceived) {
             $('.debug').html(JSON.stringify(gridReceived, null, 4).replace(/(?:\r\n|\r|\n)/g, '<br />'));
-            console.log('received');
             plantMap.replaceBy(gridReceived);
         });
 
@@ -101,7 +100,8 @@ $(document).ready(function(){
     }
 
     function clickOnGrid() {
-        if(game.input.mousePointer.isDown) {
+
+        if(game.input.activePointer.leftButton.isDown) {
             //console.log('clicked');
             var mouseX = game.input.activePointer.worldX;
             var mouseY = game.input.activePointer.worldY;
@@ -109,7 +109,26 @@ $(document).ready(function(){
             var x = game.math.snapToFloor(mouseX, 25) / 25;
             var y = game.math.snapToFloor(mouseY, 25) / 25;
 
-            socket.emit('addGridElement', {position:{x:x, y:y}, type:'seed'});
+            var direction = ["up", "down", "right", "left"][Math.floor(Math.random() * 4)];
+
+            socket.emit('addGridElement', {position:{x:x, y:y}, type:'seed', direction:direction});
+
+            //$.getJSON('http://localhost:3000/data.json',{}, function(data){
+                //plantMap.replaceBy(data);
+            //});
+
+        }
+        if(game.input.activePointer.rightButton.isDown) {
+            //console.log('clicked');
+            var mouseX = game.input.activePointer.worldX;
+            var mouseY = game.input.activePointer.worldY;
+
+            var x = game.math.snapToFloor(mouseX, 25) / 25;
+            var y = game.math.snapToFloor(mouseY, 25) / 25;
+
+            var direction = ["up", "down", "right", "left"][Math.floor(Math.random() * 4)];
+
+            socket.emit('addGridElement', {position:{x:x, y:y}, type:'stem', direction:direction});
 
             //$.getJSON('http://localhost:3000/data.json',{}, function(data){
                 //plantMap.replaceBy(data);
