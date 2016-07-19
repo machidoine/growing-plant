@@ -1,7 +1,7 @@
 {"frames": {
 "mold-team3":
 {
-	"frame" : {"x":125,"y":50,"w":25,"h":25},
+	"frame" : {"x":150,"y":50,"w":25,"h":25},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
@@ -9,7 +9,7 @@
 },
 "mold-team2":
 {
-	"frame" : {"x":125,"y":25,"w":25,"h":25},
+	"frame" : {"x":150,"y":25,"w":25,"h":25},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
@@ -17,7 +17,7 @@
 },
 "mold-team1":
 {
-	"frame" : {"x":125,"y":0,"w":25,"h":25},
+	"frame" : {"x":150,"y":0,"w":25,"h":25},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
@@ -90,6 +90,30 @@
 "fork-team1":
 {
 	"frame" : {"x":50,"y":0,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"elbow-team3":
+{
+	"frame" : {"x":125,"y":50,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"elbow-team2":
+{
+	"frame" : {"x":125,"y":25,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"elbow-team1":
+{
+	"frame" : {"x":125,"y":0,"w":25,"h":25},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
