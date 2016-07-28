@@ -33,4 +33,3 @@ En tant que joueur, je gagne si j'ai le plus de territoire alors qu'aucune plant
 
 En tant que joueur, mon territoire est déterminé par l'ensemble du terreau m'appartenant dans le jardin.
 En tant que joueur, mes points sont déterminés par la somme de mes territoires et du terreau de mon stock.
-
