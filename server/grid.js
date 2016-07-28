@@ -6,15 +6,15 @@
 
 module.exports = class Grid {
     constructor(width, height) {
-        this.width = width;
-        this.height = height;
+        this._width = width;
+        this._height = height;
         this._points = [];
         this.initPoints();
     }
 
     initPoints() {
-        for (var i = 0; i < this.width; i++) {
-            for (var j = 0; j < this.height; j++) {
+        for (var i = 0; i < this._width; i++) {
+            for (var j = 0; j < this._height; j++) {
                 this._points.push(undefined);
             }
         }
@@ -29,6 +29,15 @@ module.exports = class Grid {
         });
         return p;
     }
+
+    get width() {
+        return this._width;
+    }
+
+    get height() {
+        return this._height;
+    }
+
 
     getPoint(position) {
         return this._points[this.getIndex(position)];
@@ -45,7 +54,7 @@ module.exports = class Grid {
     }
 
     getIndex(position) {
-        return position.y * this.width + position.x;
+        return position.y * this._width + position.x;
     }
 
     removePoint(point) {
