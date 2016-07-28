@@ -3,7 +3,8 @@ angular.module('plant').directive 'gpMenuItems', ->
   {
     templateUrl: 'templates/menu-items.html'
     restrict: 'E'
-    scope: menuModel: '='
+    scope:
+      menuModel: '='
     controller: ($scope, $element) ->
 
   }

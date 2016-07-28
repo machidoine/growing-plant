@@ -1,36 +1,36 @@
-.menu-items{
-    position: relative;
-    height:$menu-height;
-    width:$menu-width;
-    left: 50%;
-    transform: translateX(-50%);
+.menu-items {
+  position: relative;
+  height: $menu-height;
+  width: $menu-width;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.menu-items ul{
-    list-style:none;
-    margin-left:0;
+.menu-items ul {
+  list-style: none;
+  margin-left: 0;
 }
 
-.menu-items li{
-    height:$menu-item-size;
-    width:$menu-item-size;
-    background-color:#e5e5e5;
-    float:left;
-    border:5px transparent solid;
+.menu-items li {
+  height: $menu-item-size;
+  width: $menu-item-size;
+  background-color: #e5e5e5;
+  float: left;
+  border: 5px transparent solid;
 }
 
-.menu-items li.active{
-    border-color:black;
+.menu-items li.active {
+  border-color: black;
 }
 
-.menu-items .menu-item-seed{
-    background-color:$color-seed;
+.menu-items .menu-item-seed {
+  background-color: $color-seed;
 }
 
-.menu-items .menu-item-tutor{
-    background-color:$color-tutor;
+.menu-items .menu-item-tutor {
+  background-color: $color-tutor;
 }
 
-.menu-items .menu-item-fork{
-    background-color:$color-fork;
+.menu-items .menu-item-fork {
+  background-color: $color-fork;
 }

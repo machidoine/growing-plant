@@ -4,12 +4,12 @@ En tant qu'univers, je fais passer les saisons de hiver, printemps, été à automn
 ~ En tant que plante, je pousse toute les X seconde (définir peut être en fonction de la saison)
 En tant que plante, je pousse plus vite (vitesse ?) si je suis planté sur du terreau.
 + En tant que plante, si je pousse sur un tuteur, alors je prend sa direction.
++ En tant que plante, si je pousse sur un tuteur ayant une direction opposée à la mienne, alors je ne change pas de direction.
 + En tant que plante, je ne pousse plus si je croise une plante adverse.
 En tant que plante, si je pousse sur une plante amie, alors je fusionne avec elle et perd ma graine (je ne pousserai plus).
 
-En tant que plante, je meurs lorsque je touche la bordure du jardin.
-En tant que plante, je meurs lorsque je me touche moi-même.
-En tant que Plante, je deviens terreau lorsque je meurs.
+En tant que plante, je deviens terreau lorsque je touche la bordure du jardin.
+En tant que plante, je deviens terreau lorsque je me touche moi-même.
 En tant que plante, la ou les zones fermées que je délimite deviennent terreau lorsque je meurs. Une zone fermée est l'ensemble des points que j'entoure, bordures comprises.
 En tant que Plante, je produis des fleurs en été.
 En tant que Plante, je produis une fleurs tous les XX cases si pas de plante à XX case aux alentours.

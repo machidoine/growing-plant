@@ -1,25 +1,25 @@
-$.ajaxSetup ({
+$.ajaxSetup({
     // Disable caching of AJAX responses
     cache: false
 });
 
-$(document).ready(function(){
+$(document).ready(function () {
 
-    var game = new Phaser.Game(800,600,Phaser.AUTO,'game',{
+    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', {
         preload: preload,
         create: create,
         update: update,
-        render : render
+        render: render
     });
 
     var socket;
     var game;
     var plantMap;
     var directions = {
-        'up' : 0,
-        'down' : 180,
-        'right' : 90,
-        'left' : -90
+        'up': 0,
+        'down': 180,
+        'right': 90,
+        'left': -90
     }
 
     var PlantMap = class {
@@ -31,12 +31,12 @@ $(document).ready(function(){
 
         add(plant) {
             var sprite = this.group.create(0, 0, 'plant-textures', plant.type + '-' + plant.team);
-             /*sprite.rotation = directions[plant.direction];
-           sprite.pivot.x = sprite.x + 12.5;
-            sprite.pivot.y = sprite.y + 12.5;
-            sprite.anchor.setTo(0,0);
-            sprite.pivot.x = sprite.x + 12.5;
-            sprite.pivot.y = sprite.y + 12.5;*/
+            /*sprite.rotation = directions[plant.direction];
+             sprite.pivot.x = sprite.x + 12.5;
+             sprite.pivot.y = sprite.y + 12.5;
+             sprite.anchor.setTo(0,0);
+             sprite.pivot.x = sprite.x + 12.5;
+             sprite.pivot.y = sprite.y + 12.5;*/
             sprite.anchor.setTo(0.5, 0.5);
             sprite.angle = directions[plant.direction];
             sprite.x = sprite.width * plant.position.x + 12.5;
@@ -52,10 +52,10 @@ $(document).ready(function(){
             this.group.removeAll();
         }
 
-        addAll(plants){
+        addAll(plants) {
             var me = this;
-            plants.forEach(function(plant){
-               me.add(plant); 
+            plants.forEach(function (plant) {
+                me.add(plant);
             });
         }
 
@@ -67,8 +67,8 @@ $(document).ready(function(){
         }
 
         getCellByType(type) {
-            return this._sprites.filter(function(e) {
-               return e.type == type; 
+            return this._sprites.filter(function (e) {
+                return e.type == type;
             });
         }
 
@@ -85,15 +85,15 @@ $(document).ready(function(){
         plantMap = new PlantMap(game);
 
         socket = io.connect();
-        socket.on('myConnect', function(gridReceived) {
+        socket.on('myConnect', function (gridReceived) {
             plantMap.replaceBy(gridReceived);
         });
-        socket.on('gridElementReceive', function(gridReceived) {
+        socket.on('gridElementReceive', function (gridReceived) {
             $('.debug').html(JSON.stringify(gridReceived, null, 4).replace(/(?:\r\n|\r|\n)/g, '<br />'));
             plantMap.replaceBy(gridReceived);
         });
 
-        game.stage.backgroundColor = '#2d2d2d';
+        game.stage.backgroundColor = '#befe9e';
         // plantMap.addPlant({x: 0, y: 0, type: 'seed'});    
 
         game.input.addMoveCallback(clickOnGrid, this);
@@ -101,7 +101,7 @@ $(document).ready(function(){
 
     function clickOnGrid() {
 
-        if(game.input.activePointer.leftButton.isDown) {
+        if (game.input.activePointer.leftButton.isDown) {
             //console.log('clicked');
             var mouseX = game.input.activePointer.worldX;
             var mouseY = game.input.activePointer.worldY;
@@ -111,14 +111,14 @@ $(document).ready(function(){
 
             var direction = ["up", "down", "right", "left"][Math.floor(Math.random() * 4)];
 
-            socket.emit('addGridElement', {position:{x:x, y:y}, type:'seed', direction:direction});
+            socket.emit('addGridElement', {position: {x: x, y: y}, type: 'seed', direction: direction});
 
             //$.getJSON('http://localhost:3000/data.json',{}, function(data){
-                //plantMap.replaceBy(data);
+            //plantMap.replaceBy(data);
             //});
 
         }
-        if(game.input.activePointer.rightButton.isDown) {
+        if (game.input.activePointer.rightButton.isDown) {
             //console.log('clicked');
             var mouseX = game.input.activePointer.worldX;
             var mouseY = game.input.activePointer.worldY;
@@ -128,10 +128,10 @@ $(document).ready(function(){
 
             var direction = ["up", "down", "right", "left"][Math.floor(Math.random() * 4)];
 
-            socket.emit('addGridElement', {position:{x:x, y:y}, type:'stem', direction:direction});
+            socket.emit('addGridElement', {position: {x: x, y: y}, type: 'stem', direction: direction});
 
             //$.getJSON('http://localhost:3000/data.json',{}, function(data){
-                //plantMap.replaceBy(data);
+            //plantMap.replaceBy(data);
             //});
 
         }

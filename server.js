@@ -1,4 +1,3 @@
-
 'use strict'
 //
 // # SimpleServer
@@ -39,28 +38,30 @@ var Garden = class {
         this._plants = [];
         this._stems = [];
         this._stemGrid = new Grid(width, height);
+        this._molds = [];
+        this._moldGrid = new Grid(width, height);
     }
 
-    addSeed(seed){
-        
-        if(this.allowAddHere(seed.position)) {
+    addSeed(seed) {
+
+        if (this.allowAddHere(seed.position)) {
             console.log('addSeed');
             var start = new Date().getTime();
 
             this._plantGrid.addPoint(seed);
 
             this._plants.push(new Plant(this, seed));
-             // or ?
-            this._plants[this.getIndex(seed.position)] = new Plant(this, seed);
+            // or ?
+            // this._plants[this.getIndex(seed.position)] = new Plant(this, seed);
 
             var end = new Date().getTime();
             var elapse = end - start;
             console.log('push plant : ' + elapse);
-        }        
+        }
     }
 
     addStem(stem) {
-        if(this.allowAddHere(stem.position)) {
+        if (this.allowAddHere(stem.position)) {
             this._stemGrid.addPoint(stem);
         }
     }
@@ -73,14 +74,14 @@ var Garden = class {
         return position.y * this.width + position.x;
     }
 
-    get plants(){
+    get plants() {
         return this._plants;
     }
 
     consumeStem(element) {
         var stem = this._stemGrid.getPoint(element.position);
 
-        if(typeof stem !== 'undefined' && stem.team === element.team) {
+        if (typeof stem !== 'undefined' && stem.team === element.team) {
             this._stemGrid.removePoint(stem);
             return stem.direction;
         }
@@ -96,16 +97,45 @@ var Garden = class {
         return this._stemGrid;
     }
 
-    allowAddHere(point){
+    get moldGrid() {
+        return this._moldGrid;
+    }
+
+    allowAddHere(point) {
         return typeof this._plantGrid.getPoint(point) === 'undefined' && this.boundaries.isIn(point);
+    }
+
+    replaceByMoldIfOut(plant, newBody) {
+        if (this.boundaries.isOut(newBody.position)) {
+            this.replaceByMold(plant);
+        }
+    }
+
+    replaceByMold(plant) {
+        var me = this;
+        plant.bodies.forEach(function (el) {
+            var mold = clone(el);
+            mold.type = 'mold';
+            me._molds.push(mold);
+            me._moldGrid.addPoint(mold);
+
+            me._plantGrid.removePoint(el);
+        });
+
+        this._plants.splice(this._plants.indexOf(plant), 1);
+        this._plantGrid.removePoint(plant.seed);
     }
 };
 
 var directions = {
-    "up" : {x:0, y:-1},
-    "down" : {x:0, y:1},
-    "left" : {x:-1, y:0},
-    "right" : {x:1, y:0}
+    "up": {x: 0, y: -1},
+    "down": {x: 0, y: 1},
+    "left": {x: -1, y: 0},
+    "right": {x: 1, y: 0}
+}
+
+var clone = function (object) {
+    return JSON.parse(JSON.stringify(object));
 }
 
 var Plant = class {
@@ -118,29 +148,33 @@ var Plant = class {
     }
 
     grow() {
-        var start = new Date().getTime();
-
-        var newBody = JSON.parse(JSON.stringify(this.lastBody));
+        var newBody = clone(this.lastBody);
         newBody.type = "plant-body";
-        
+
         newBody.position = this.translate(newBody.position, this.direction);
 
-        if(garden.allowAddHere(newBody.position)) {
+        if (garden.allowAddHere(newBody.position)) {
+            console.log('can grow and grow');
             var direction = this.garden.consumeStem(newBody);
-            newBody.direction = direction;
-            this.direction = direction;
+            console.log(directions[direction]);
+            console.log(directions[this.direction]);
+            if (directions[direction].x + directions[this.direction].x === 0 && directions[direction].y + directions[this.direction].y === 0) {
+                // do nothing
+            } else {
+                newBody.direction = direction;
+                this.direction = direction;
+            }
+
             this.garden.addBody(newBody);
             this.body.push(newBody);
-            if(this.lastBody.type !== 'seed') {
+            if (this.lastBody.type !== 'seed') {
                 this.lastBody.type = 'plant-body';
-            }            
+            }
             newBody.type = 'plant-head';
             this.lastBody = newBody;
+        } else {
+            this.garden.replaceByMoldIfOut(this, newBody);
         }
-
-        var end = new Date().getTime();
-        var elapse = end - start;
-        //console.log('plant grow : ' + elapse);
     }
 
     translate(position, direction) {
@@ -149,22 +183,26 @@ var Plant = class {
         position.y += d.y;
         return position;
     }
+
+    get bodies() {
+        return this.body;
+    }
 };
 
 
-var GardenGridConvertor = class{
-    static toGrid(garden){
-        return garden.plantGrid.points.concat(garden.stemGrid.points);
+var GardenGridConvertor = class {
+    static toGrid(garden) {
+        return garden.plantGrid.points.concat(garden.stemGrid.points).concat(garden.moldGrid.points);
     }
 };
 
 var GardenBoundaries = class {
-    constructor(garden){
+    constructor(garden) {
         this.garden = garden;
     }
 
     isOut(point) {
-        if(point.x >= garden.width || point.y >= garden.height || point.x < 0 || point.y < 0) {
+        if (point.x >= garden.width || point.y >= garden.height || point.x < 0 || point.y < 0) {
             return true;
         }
 
@@ -172,7 +210,7 @@ var GardenBoundaries = class {
     }
 
     isIn(point) {
-        return ! this.isOut(point);
+        return !this.isOut(point);
     }
 };
 
@@ -185,8 +223,8 @@ var Grid = class {
     }
 
     initPoints() {
-        for(var i = 0; i < this.width; i++) {
-            for(var j = 0; j < this.height; j++) {
+        for (var i = 0; i < this.width; i++) {
+            for (var j = 0; j < this.height; j++) {
                 this._points.push(undefined);
             }
         }
@@ -194,10 +232,10 @@ var Grid = class {
 
     get points() {
         var p = [];
-        this._points.forEach(function(e){
-           if(typeof e !== 'undefined') {
-               p.push(e);
-           } 
+        this._points.forEach(function (e) {
+            if (typeof e !== 'undefined') {
+                p.push(e);
+            }
         });
         return p;
     }
@@ -211,8 +249,8 @@ var Grid = class {
     }
 
     getCellByType(type) {
-        return this._points.filter(function(e) {
-           return e.type == type; 
+        return this._points.filter(function (e) {
+            return e.type == type;
         });
     }
 
@@ -232,29 +270,29 @@ var Grid = class {
 //var initialPoints = [];
 //initialPoints = [{"x":0, "y":0, "type":"seed"}];
 var garden = new Garden(32, 24, new Grid(32, 24));
-garden.addSeed({'position':{'x':2, 'y':20},direction:"down", 'type':'seed', 'team':'team3'});
+garden.addSeed({'position': {'x': 2, 'y': 20}, direction: "down", 'type': 'seed', 'team': 'team3'});
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
     sockets.push(socket);
     players[socket.id] = {};
     players[socket.id].color = color[Math.floor(Math.random() * 3)];
     players[socket.id].team = team[Math.floor(Math.random() * 3)];
 
     socket.emit('myConnect', GardenGridConvertor.toGrid(garden));
-    
-    socket.on('disconnect', function() {
+
+    socket.on('disconnect', function () {
         sockets.splice(sockets.indexOf(socket), 1);
     });
-    
-    socket.on('addGridElement', function(gridElement) {
+
+    socket.on('addGridElement', function (gridElement) {
         var start = new Date().getTime();
 
         gridElement.color = players[socket.id].color;
         gridElement.team = players[socket.id].team;
 
-        if(gridElement.type === 'seed'){
+        if (gridElement.type === 'seed') {
             garden.addSeed(gridElement);
-        } else if(gridElement.type === 'stem'){
+        } else if (gridElement.type === 'stem') {
             garden.addStem(gridElement);
         }
 
@@ -269,8 +307,8 @@ io.on('connection', function(socket) {
 
 });
 
-setInterval(function() {
-    garden.plants.forEach(function(el){
+setInterval(function () {
+    garden.plants.forEach(function (el) {
         el.grow();
     })
     var grid = GardenGridConvertor.toGrid(garden);
@@ -279,14 +317,13 @@ setInterval(function() {
 }, 1000);
 
 
-
 function broadcast(event, data) {
-    sockets.forEach(function(socket) {
+    sockets.forEach(function (socket) {
         socket.emit(event, data);
     });
 }
 
-server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function() {
+server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function () {
     var addr = server.address();
     console.log("Chat server listening at", addr.address + ":" + addr.port);
 });
