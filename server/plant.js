@@ -27,9 +27,7 @@ module.exports = class Plant {
             var direction = this.garden.consumeStem(newBody);
             console.log(constants.directions[direction]);
             console.log(constants.directions[this.direction]);
-            if (constants.directions[direction].x + constants.directions[this.direction].x === 0 && constants.directions[direction].y + constants.directions[this.direction].y === 0) {
-                // do nothing
-            } else {
+            if (!(constants.directions[direction].x + constants.directions[this.direction].x === 0 && constants.directions[direction].y + constants.directions[this.direction].y === 0)) {
                 newBody.direction = direction;
                 this.direction = direction;
             }

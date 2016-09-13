@@ -9,6 +9,8 @@ var Plant = require('./plant');
 var utils = require("./utils.js");
 var GardenGridConvertor = require('./garden-grid-convertor');
 
+var LayerManager = require("./layer/layer-manager");
+
 module.exports = class Garden {
     constructor(plantGrid) {
         this.width = plantGrid.width;
@@ -20,6 +22,11 @@ module.exports = class Garden {
         this._stemGrid = new Grid(this.width, this.height);
         this._molds = [];
         this._moldGrid = new Grid(this.width, this.height);
+        
+        this.layerManager = new LayerManager();
+        this.plantLayer = this.layerManager.createLayer();
+        this.layerManager.addLayer(new MoldLayer());
+        this.layerManager.addLayer(new StemLayer());        
     }
 
     addSeed(seed) {
@@ -92,13 +99,13 @@ module.exports = class Garden {
 
     replaceByMold(plant) {
         var me = this;
-        plant.bodies.forEach(function (el) {
-            var mold = utils.clone(el);
+        plant.bodies.forEach(function (body) {
+            var mold = utils.clone(body);
             mold.type = 'mold';
             me._molds.push(mold);
             me._moldGrid.addPoint(mold);
 
-            me._plantGrid.removePoint(el);
+            me._plantGrid.removePoint(body);
         });
 
         this._plants.splice(this._plants.indexOf(plant), 1);
@@ -114,7 +121,7 @@ module.exports = class Garden {
             plant.grow();
         })
     }
-    
+
     addElement(element) {
         if (element.type === 'seed') {
             this.addSeed(element);
