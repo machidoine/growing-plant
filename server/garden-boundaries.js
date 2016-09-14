@@ -3,13 +3,13 @@
  */
 'use strict'
 
-module.exports = class GardenBoundaries {
-    constructor(garden) {
-        this.garden = garden;
+module.exports = class Boundaries {
+    constructor(rectangle) {
+        this.rectangle = rectangle;
     }
 
     isOut(point) {
-        if (point.x >= this.garden.width || point.y >= this.garden.height || point.x < 0 || point.y < 0) {
+        if (point.x >= this.rectangle.width || point.y >= this.rectangle.height || point.x < 0 || point.y < 0) {
             return true;
         }
 
@@ -18,5 +18,13 @@ module.exports = class GardenBoundaries {
 
     isIn(point) {
         return !this.isOut(point);
+    }
+
+    get width() {
+        return this.rectangle.width;
+    }
+
+    get height() {
+        return this.rectangle.height;
     }
 };

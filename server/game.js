@@ -38,7 +38,7 @@ module.exports = class Game {
     startWorldTime() {
         var me = this;
         setInterval(function () {
-            me.garden.grow();
+            me.garden.changeToNextDay();
 
             me.broadcastUpdateGrid();
 

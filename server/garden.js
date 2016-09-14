@@ -5,9 +5,12 @@
 
 var GardenBoundaries = require('./garden-boundaries');
 var Grid = require('./grid');
-var Plant = require('./plant');
+
+var GardenElementFactory = require('./garden-element-factory');
 var utils = require("./utils.js");
 var GardenGridConvertor = require('./garden-grid-convertor');
+
+var LayerContainer = require("./layer/layer-container");
 
 module.exports = class Garden {
     constructor(plantGrid) {
@@ -20,33 +23,34 @@ module.exports = class Garden {
         this._stemGrid = new Grid(this.width, this.height);
         this._molds = [];
         this._moldGrid = new Grid(this.width, this.height);
+
+
+        this._gardenElementFactory = new GardenElementFactory(this);
+        this._layerContainer = new LayerContainer(this._gardenElementFactory, this.boundaries);
+        this._plantLayer = this._layerContainer.createLayer();
+        this._moldLayer = this._layerContainer.createLayer();
+        this._stemLayer = this._layerContainer.createLayer();
+
+
+    }
+
+    get gardenElementFactory() {
+        return this._gardenElementFactory;
     }
 
     addSeed(seed) {
-        if (this.allowAddHere(seed.position)) {
-            console.log('addSeed');
-            var start = new Date().getTime();
-
-            this._plantGrid.addPoint(seed);
-
-            this._plants.push(new Plant(this, seed));
-            // or ?
-            // this._plants[this.getIndex(seed.position)] = new Plant(this, seed);
-
-            var end = new Date().getTime();
-            var elapse = end - start;
-            console.log('push plant : ' + elapse);
-        }
+        var gardeners = this._layerContainer.getGardenerAt(seed.position);
+        gardeners.plant(seed);
     }
 
     addStem(stem) {
         if (this.allowAddHere(stem.position)) {
-            this._stemGrid.addPoint(stem);
+            this._stemLayer.addElement(this._gardenElementFactory.createStem(stem));
         }
     }
 
     addBody(body) {
-        this._plantGrid.addPoint(body);
+        this._plantLayer.addElement(this._gardenElementFactory.createPlantBody(body));
     }
 
     getIndex(position) {
@@ -66,6 +70,18 @@ module.exports = class Garden {
         }
 
         return element.direction;
+    }
+
+    get layerContainer() {
+        return this._layerContainer;
+    }
+
+    get stemLayer() {
+        return this._stemLayer;
+    }
+
+    get plantLayer() {
+        return this._plantLayer;
     }
 
     get plantGrid() {
@@ -92,13 +108,13 @@ module.exports = class Garden {
 
     replaceByMold(plant) {
         var me = this;
-        plant.bodies.forEach(function (el) {
-            var mold = utils.clone(el);
+        plant.bodies.forEach(function (body) {
+            var mold = utils.clone(body);
             mold.type = 'mold';
             me._molds.push(mold);
             me._moldGrid.addPoint(mold);
 
-            me._plantGrid.removePoint(el);
+            me._plantGrid.removePoint(body);
         });
 
         this._plants.splice(this._plants.indexOf(plant), 1);
@@ -106,15 +122,19 @@ module.exports = class Garden {
     }
 
     getRawGrid() {
-        return GardenGridConvertor.toGrid(this);
+        return this._layerContainer.flatToGrid();
     }
     
-    grow() {
-        this._plants.forEach(function (plant) {
-            plant.grow();
+    changeToNextDay() {
+        this._plants.forEach((plant) => {
+            var position = plant.nextPosition();
+            var multiLayerGardeners = this._layerContainer.getGardenerAt(position);
+            console.log(multiLayerGardeners);
+            console.log('------------------------------------------------------------------');
+            multiLayerGardeners.workOnPlant(plant); // TODO handle multiple element on same position in different layer
         })
     }
-    
+
     addElement(element) {
         if (element.type === 'seed') {
             this.addSeed(element);
