@@ -4,9 +4,9 @@
 'use strict'
 
 var RemotePlayer = require('./remote-player');
-var Garden = require('./garden');
-var Grid = require('./grid');
-var constants = require('./constants');
+var Garden = require('./../garden/garden');
+var Grid = require('./../layer/grid');
+var constants = require('./../utils/constants');
 
 
 module.exports = class Game {

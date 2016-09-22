@@ -3,14 +3,14 @@
  */
 'use strict'
 
-var GardenBoundaries = require('./garden-boundaries');
-var Grid = require('./grid');
+var GardenBoundaries = require('./boundaries');
+var Grid = require('./../layer/grid');
 
-var GardenElementFactory = require('./garden-element-factory');
-var utils = require("./utils.js");
+var GardenElementFactory = require('./garden-element/garden-element-factory');
+var utils = require("./../utils/utils.js");
 var GardenGridConvertor = require('./garden-grid-convertor');
 
-var LayerContainer = require("./layer/layer-container");
+var LayerContainer = require("./../layer/layer-container");
 
 module.exports = class Garden {
     constructor(plantGrid) {

@@ -18,6 +18,8 @@
     "gulp-connect": "latest",
     "gulp-sass": "latest",
     "gulp-uglify": "latest",
-    "gulp-util": "latest"
+    "gulp-util": "latest",
+    "mocha":"latest",
+    "should":"latest"
   }
 }

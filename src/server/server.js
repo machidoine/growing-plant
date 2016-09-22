@@ -11,7 +11,7 @@ var async = require('async');
 var socketio = require('socket.io');
 var express = require('express');
 
-var GrowingGame = require('./game');
+var GrowingGame = require('./game/game');
 
 var router = express();
 var server = http.createServer(router);

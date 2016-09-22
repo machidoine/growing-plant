@@ -1,8 +1,8 @@
 'use strict'
 
 var GardenElement = require('./garden-element');
-var utils = require("./utils.js");
-var constants = require('./constants');
+var utils = require("./../../utils/utils.js");
+var constants = require('./../../utils/constants');
 
 module.exports = class Plant extends GardenElement {
     constructor(garden, seed) {

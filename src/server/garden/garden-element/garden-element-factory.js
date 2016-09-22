@@ -2,18 +2,18 @@
 
 var Plant = require('./plant');
 var Stem = require('./stem');
-var Body = require('./body');
+var Body = require('./../body');
 var Mold = require('./mold');
 var UnboundGardenElement = require('./unbound-garden-element');
 var NoElementGardenElement = require('./noelement-garden-element');
 
-var PlantGardener = require('./plant-gardener');
-var StemGardener = require('./stem-gardener');
-var BodyGardener = require('./body-gardener');
-var MoldGardener = require('./mold-gardener');
+var PlantGardener = require('./../gardener/plant-gardener');
+var StemGardener = require('./../gardener/stem-gardener');
+var BodyGardener = require('./../gardener/body-gardener');
+var MoldGardener = require('./../gardener/mold-gardener');
 
-var UnboundGardener = require('./unbound-gardener');
-var NoElementGardener = require('./noelement-gardener');
+var UnboundGardener = require('./../gardener/unbound-gardener');
+var NoElementGardener = require('./../gardener/noelement-gardener');
 
 module.exports = class GardenElementFactory {
     constructor(garden) {

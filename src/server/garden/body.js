@@ -1,6 +1,6 @@
 'use strict'
 
-var GardenElement = require('./garden-element');
+var GardenElement = require('./garden-element/garden-element');
 
 module.exports = class Body extends GardenElement {
     constructor(bodyParameter) {

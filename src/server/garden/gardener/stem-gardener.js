@@ -1,7 +1,7 @@
 'use strict'
 
 var Gardener = require('./gardener');
-var constants = require('./constants');
+var constants = require('./../../utils/constants');
 
 module.exports = class StemGardener extends Gardener {
     constructor(garden, stem) {
