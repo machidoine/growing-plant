@@ -8,7 +8,7 @@ module.exports = class Plant extends GardenElement {
     constructor(garden, seed) {
         super(seed);
 
-        this.seed = seed;
+        this._seed = seed;
         this.body = [];
         this.garden = garden;
         this.lastBody = this.seed;
@@ -26,36 +26,13 @@ module.exports = class Plant extends GardenElement {
         newBody.position = this.nextPosition();
         newBody.direction = this.direction;
 
-        this.garden.addBody(newBody);
+        this.garden.addBody(newBody, this);
         this.body.push(newBody);
         if (this.lastBody.type !== 'seed') {
             this.lastBody.type = 'plant-body';
         }
         newBody.type = 'plant-head';
         this.lastBody = newBody;
-
-        return; // TODO next code must be removed when we are sure ok our gardener
-
-        if (this.garden.allowAddHere(newBody.position)) {
-            console.log('can grow and grow');
-            var direction = this.garden.consumeStem(newBody);
-            console.log(constants.directions[direction]);
-            console.log(constants.directions[this.direction]);
-            if (!(constants.directions[direction].x + constants.directions[this.direction].x === 0 && constants.directions[direction].y + constants.directions[this.direction].y === 0)) {
-                newBody.direction = direction;
-                this.direction = direction;
-            }
-
-            this.garden.addBody(newBody);
-            this.body.push(newBody);
-            if (this.lastBody.type !== 'seed') {
-                this.lastBody.type = 'plant-body';
-            }
-            newBody.type = 'plant-head';
-            this.lastBody = newBody;
-        } else {
-            this.garden.replaceByMoldIfOut(this, newBody);
-        }
     }
 
     translate(position, direction) {
@@ -68,6 +45,10 @@ module.exports = class Plant extends GardenElement {
 
     get bodies() {
         return this.body;
+    }
+
+    get seed() {
+        return this._seed;
     }
 };
 

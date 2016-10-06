@@ -12,6 +12,12 @@ module.exports = class LayerContainer {
         this.layers = [];
     }
 
+    flatToGrid() {
+        return this.layers.reduce((previousElement, currentElement) => {
+            return previousElement.concat(currentElement.flatToGrid());
+        }, []);
+    }
+
     createLayer() {
         var layer = new Layer(this._gardenElementFactory, this._boundaries);
         this.layers.push(layer);
@@ -59,10 +65,6 @@ module.exports = class LayerContainer {
 
     }
 
-    flatToGrid() {
-        return this.layers.reduce((previousElement, currentElement) => {
-            return previousElement.concat(currentElement.flatToGrid());
-        }, []);
-    }
+
 
 }

@@ -38,19 +38,12 @@ module.exports = class Grid {
         return this._height;
     }
 
-
     getPoint(position) {
         return this._points[this.getIndex(position)];
     }
 
     addPoint(point) {
         this._points[this.getIndex(point.position)] = point;
-    }
-
-    getCellByType(type) {
-        return this._points.filter(function (e) {
-            return e.type == type;
-        });
     }
 
     getIndex(position) {

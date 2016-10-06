@@ -11,4 +11,8 @@ module.exports = class UnboundGardener extends Gardener {
         this.garden.replaceByMold(plant);
     }
 
+    plant(seed) {}
+
+    addStem(stemData) {}
+
 }

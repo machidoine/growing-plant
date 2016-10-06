@@ -4,7 +4,6 @@
 'use strict'
 
 var Grid = require('./grid');
-var Boundaries = require('../garden/boundaries');
 
 module.exports = class Layer {
     constructor(gardenElementFactory, boundaries) {

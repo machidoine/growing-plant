@@ -7,8 +7,4 @@ module.exports = class MoldGardener extends Gardener {
         super(garden);
         this._mold = mold;
     }
-
-    workOnPlant(plant) {
-        plant.grow();
-    }
 }

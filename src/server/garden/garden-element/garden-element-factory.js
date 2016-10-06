@@ -2,7 +2,7 @@
 
 var Plant = require('./plant');
 var Stem = require('./stem');
-var Body = require('./../body');
+var Body = require('./body');
 var Mold = require('./mold');
 var UnboundGardenElement = require('./unbound-garden-element');
 var NoElementGardenElement = require('./noelement-garden-element');
@@ -34,8 +34,8 @@ module.exports = class GardenElementFactory {
         return stem;
     }
 
-    createPlantBody(bodyParameter) {
-        var body = new Body(bodyParameter);
+    createPlantBody(bodyParameter, plant) {
+        var body = new Body(bodyParameter, plant);
         body.gardener = new BodyGardener(this._garden, body);
 
         return body;

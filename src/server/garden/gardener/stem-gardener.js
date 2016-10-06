@@ -10,7 +10,7 @@ module.exports = class StemGardener extends Gardener {
     }
 
     workOnPlant(plant) {
-        plant.grow();
+        super.workOnPlant(plant);
 
         if(this._stem.team === plant.team) {
             if(this.isOpposite(plant.direction)) {
@@ -25,5 +25,10 @@ module.exports = class StemGardener extends Gardener {
     isOpposite(direction) {
         return !(constants.directions[direction].x + constants.directions[this._stem.direction].x === 0 && constants.directions[direction].y + constants.directions[this._stem.direction].y === 0);
     }
+
+
+    plant(seed) {}
+
+    addStem(stemData) {}
 
 }

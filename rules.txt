@@ -8,8 +8,8 @@ En tant que plante, je pousse plus vite (vitesse ?) si je suis planté sur du te
 + En tant que plante, je ne pousse plus si je croise une plante adverse.
 En tant que plante, si je pousse sur une plante amie, alors je fusionne avec elle et perd ma graine (je ne pousserai plus).
 
-En tant que plante, je deviens terreau lorsque je touche la bordure du jardin.
-En tant que plante, je deviens terreau lorsque je me touche moi-même.
++En tant que plante, je deviens terreau lorsque je touche la bordure du jardin.
++En tant que plante, je deviens terreau lorsque je me touche moi-même.
 En tant que plante, la ou les zones fermées que je délimite deviennent terreau lorsque je meurs. Une zone fermée est l'ensemble des points que j'entoure, bordures comprises.
 En tant que Plante, je produis des fleurs en été.
 En tant que Plante, je produis une fleurs tous les XX cases si pas de plante à XX case aux alentours.

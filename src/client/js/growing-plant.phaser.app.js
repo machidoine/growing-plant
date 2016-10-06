@@ -29,18 +29,18 @@ $(document).ready(function () {
             this._sprites = [];
         }
 
-        add(plant) {
-            var sprite = this.group.create(0, 0, 'plant-textures', plant.type + '-' + plant.team);
-            /*sprite.rotation = directions[plant.direction];
+        add(gardenElement) {
+            var sprite = this.group.create(0, 0, 'plan-textures', gardenElement.type + '-' + gardenElement.team);
+            /*sprite.rotation = directions[plan.direction];
              sprite.pivot.x = sprite.x + 12.5;
              sprite.pivot.y = sprite.y + 12.5;
              sprite.anchor.setTo(0,0);
              sprite.pivot.x = sprite.x + 12.5;
              sprite.pivot.y = sprite.y + 12.5;*/
             sprite.anchor.setTo(0.5, 0.5);
-            sprite.angle = directions[plant.direction];
-            sprite.x = sprite.width * plant.position.x + 12.5;
-            sprite.y = sprite.height * plant.position.y + 12.5;
+            sprite.angle = directions[gardenElement.direction];
+            sprite.x = sprite.width * gardenElement.position.x + 12.5;
+            sprite.y = sprite.height * gardenElement.position.y + 12.5;
         }
 
         spriteInputListener(e) {
@@ -52,16 +52,16 @@ $(document).ready(function () {
             this.group.removeAll();
         }
 
-        addAll(plants) {
+        addAll(gardenElements) {
             var me = this;
-            plants.forEach(function (plant) {
-                me.add(plant);
+            gardenElements.forEach(function (gardenElement) {
+                me.add(gardenElement);
             });
         }
 
-        replaceBy(plants) {
+        replaceBy(gardenElements) {
             this.clear();
-            this.addAll(plants);
+            this.addAll(gardenElements);
             // this.group.callAll('events.onInputDown.add', 'events.onInputDown', this.spriteInputListener, this);
             // this.group.setAll('inputEnabled', true);
         }
