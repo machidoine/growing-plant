@@ -9,6 +9,9 @@ module.exports = class PlantGardener extends Gardener {
     }
 
     workOnPlant(plant) {
+        if(this.plant.seed === plant.seed && this.plant.team === plant.team) {
+            this.garden.replaceByMold(plant);
+        }
     }
 
 }

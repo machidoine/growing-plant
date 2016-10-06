@@ -44,9 +44,8 @@ module.exports = class Garden {
     }
 
     addStem(stem) {
-        if (this.allowAddHere(stem.position)) {
-            this._stemLayer.addElement(this._gardenElementFactory.createStem(stem));
-        }
+        var gardeners = this._layerContainer.getGardenerAt(stem.position);
+        gardeners.addStem(stem);
     }
 
     addBody(body) {
@@ -96,29 +95,15 @@ module.exports = class Garden {
         return this._moldGrid;
     }
 
-    allowAddHere(point) {
-        return typeof this._plantGrid.getPoint(point) === 'undefined' && this.boundaries.isIn(point);
-    }
-
-    replaceByMoldIfOut(plant, newBody) {
-        if (this.boundaries.isOut(newBody.position)) {
-            this.replaceByMold(plant);
-        }
-    }
-
     replaceByMold(plant) {
-        var me = this;
-        plant.bodies.forEach(function (body) {
-            var mold = utils.clone(body);
-            mold.type = 'mold';
-            me._molds.push(mold);
-            me._moldGrid.addPoint(mold);
-
-            me._plantGrid.removePoint(body);
+        plant.bodies.forEach((body) => {
+            var moldData = utils.clone(body);
+            moldData.type = 'mold';
+            this._moldLayer.addElement(this._gardenElementFactory.createMold(moldData));
+            this._plantLayer.removeElement(body);
         });
-
+        this._plantLayer.removeElement(plant.seed);
         this._plants.splice(this._plants.indexOf(plant), 1);
-        this._plantGrid.removePoint(plant.seed);
     }
 
     getRawGrid() {

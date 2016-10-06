@@ -6,4 +6,5 @@ module.exports = class NoElementGardenElement extends GardenElement {
     constructor() {
         super();
     }
+
 }

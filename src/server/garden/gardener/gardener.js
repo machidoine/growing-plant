@@ -12,4 +12,12 @@ module.exports = class Gardener {
 
     }
 
+    addStem(stem) {
+
+    }
+
+    get garden() {
+        return this._garden;
+    }
+
 }
