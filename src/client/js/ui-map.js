@@ -29,7 +29,7 @@ class UIMap  {
     }
 
     createStemSprite(game, x, y, direction) {
-        var stemSprite = game.add.sprite(x, y, 'plant-textures', 'stem-team1');
+        var stemSprite = game.add.sprite(x, y, 'plant-textures', 'ui-arrow-top');
         stemSprite.inputEnabled = true;
         stemSprite.input.priorityID = 2;
         stemSprite.anchor.setTo(0.5, 0.5);
