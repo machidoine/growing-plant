@@ -58,8 +58,8 @@ define(['./constants'], (Constants) => {
         }
 
         onBackgroundClicked(sprite, pointer, c) {
-            this._stemGroup.x = pointer.x;
-            this._stemGroup.y = pointer.y;
+            this._stemGroup.x = this._game.math.snapToFloor(pointer.x, 25) + 12.5;
+            this._stemGroup.y = this._game.math.snapToFloor(pointer.y, 25) + 12.5;
 
             this._stemLayout.visible = true;
         }
