@@ -31,6 +31,7 @@ define(    ['garden-ui', 'remote-player', 'inventory-menu-ui'],
 
             addGridElement(x, y, type, direction) {
                 this._remotePlayer.addGridElement(x, y, type, direction);
+                this._inventoryUI.isSelected = false;
             }
 
             makeSelectableFor(elementType) {
