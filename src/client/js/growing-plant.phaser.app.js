@@ -1,4 +1,35 @@
-require(['garden-element-map', 'ui-map', 'constants'], function () {
+requirejs.config({
+   // baseUrl: 'js/lib',
+    paths: {
+        // the left side is the module ID,
+        // the right side is the path to
+        // the jQuery file, relative to baseUrl.
+        // Also, the path should NOT include
+        // the '.js' file extension. This example
+        // is using jQuery 1.9.0 located at
+        // js/lib/jquery-1.9.0.js, relative to
+        // the HTML page.
+        jquery: './vendors/jquery.min',
+        Phaser: './vendors/phaser',
+        io:'/socket.io/socket.io'
+    },
+
+    // Add this map config in addition to any baseUrl or
+    // paths config you may already have in the project.
+    map: {
+        // '*' means all modules will get 'jquery-private'
+        // for their 'jquery' dependency.
+        '*': { 'jquery': 'jquery-private' },
+
+        // 'jquery-private' wants the real jQuery module
+        // though. If this line was not here, there would
+        // be an unresolvable cyclic dependency.
+        'jquery-private': { 'jquery': 'jquery' }
+    }
+});
+
+requirejs(    ['jquery','Phaser', 'io' ,'garden-element-map', 'ui-map'],
+            ($, Phaser, io, GardenElementMap, UIMap) => {
     $.ajaxSetup({
         // Disable caching of AJAX responses
         cache: false
