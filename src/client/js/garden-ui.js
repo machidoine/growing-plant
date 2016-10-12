@@ -34,5 +34,9 @@ define(    ['garden-element-map', 'garden-element-placer'],
         addGridElement(x, y, type, direction) {
             this._game.addGridElement(x, y, type, direction);
         }
+
+        makeSelectableFor(elementType) {
+            this._gardenElementPlacer.addElement(elementType);
+        }
     }
 });

@@ -12,17 +12,12 @@ define(['./sprite-factory', 'direction-selector-ui', 'Phaser'], (SpriteFactory, 
 
 
             this._backgroundSprite = SpriteFactory.instance.createBackgroundSprite(this.onBackgroundClicked.bind(this));
-            // this._backgroundSprite.visible = false;
+            this._backgroundSprite.visible = false;
             this._directionSelector = new DirectionSelectorUI(garden, this.onDirectionSelected.bind(this));
         }
 
-        addStem() {
-            this._currentElement = 'stem';
-            this._backgroundSprite.visible = true;
-        }
-
-        addSeed() {
-            this._currentElement = 'seed';
+        addElement(type) {
+            this._currentElement = type;
             this._backgroundSprite.visible = true;
         }
 
@@ -35,7 +30,7 @@ define(['./sprite-factory', 'direction-selector-ui', 'Phaser'], (SpriteFactory, 
 
         onDirectionSelected(x, y, direction) {
             this._garden.addGridElement(x, y, this._currentElement, direction);
-           // this._backgroundSprite.visible = false;
+            this._backgroundSprite.visible = false;
         }
     }
 });

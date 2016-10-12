@@ -19,6 +19,11 @@ module.exports = class RemotePlayer {
     }
 
     updateGrid(grid) {
+        grid.inventory = {
+            seed : 5,
+            stem : 4,
+            mold : 10
+        };
         this._socket.emit('gridElementReceive', grid);
     }
 
