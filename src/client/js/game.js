@@ -3,8 +3,6 @@
  * Created by bguilloteau on 12/10/16.
  */
 
-// comment just for test issues in github
-
 define(    ['garden-ui', 'remote-player', 'inventory-menu-ui'],
     (GardenUI, RemotePlayer, InventoryMenuUI) => {
         return class Game {
