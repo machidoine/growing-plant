@@ -4,27 +4,31 @@
 'use strict'
 
 module.exports = class RemotePlayer {
-    constructor(game, socket, settings) {
-        this.game = game;
-        this._socket = socket;
-        this.settings = settings;
+    constructor(settings) {
+        this.game = settings.game;
+        this._socket = settings.socket;
+        this._color = settings.color;
+        this._team = settings.team;
+        this._inventory = settings.inventory;
 
-        var me = this;
-        this._socket.on('addGridElement', function (gridElement) {
-            gridElement.color = settings.color;
-            gridElement.team = settings.team;
+        this._socket.on('addGridElement',  (gridElement) => {
+            gridElement.color = this._color;
+            gridElement.team = this._team;
 
-            me.game.addGridElement(gridElement);
+            this._inventory.provide(gridElement.type, () => {
+                this.game.addGridElement(gridElement);
+                this.sendInventory();
+            });
+
         });
     }
 
     updateGrid(grid) {
-        grid.inventory = {
-            seed : 5,
-            stem : 4,
-            mold : 10
-        };
         this._socket.emit('gridElementReceive', grid);
+    }
+
+    sendInventory() {
+        this._socket.emit('updateInventory', this._inventory.stock);
     }
 
 }

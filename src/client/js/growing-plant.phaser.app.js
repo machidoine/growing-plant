@@ -1,4 +1,4 @@
-
+"use strict";
 requirejs.config({
    // baseUrl: 'js/lib',
     paths: {
@@ -62,6 +62,8 @@ requirejs(    ['jquery','Phaser', 'io', 'sprite-factory', 'game'],
 
 
         function update() {
+
+
         }
 
         function render() {

@@ -7,6 +7,7 @@ var RemotePlayer = require('./remote-player');
 var Garden = require('./../garden/garden');
 var Grid = require('./../layer/grid');
 var constants = require('./../utils/constants');
+var Inventory = require('./../inventory/inventory');
 
 
 module.exports = class Game {
@@ -24,12 +25,15 @@ module.exports = class Game {
     }
 
     addRemotePlayer(socket) {
-        var playerSettings = {
+        var remotePlayer = new RemotePlayer( {
+            game : this,
+            socket : socket,
             color: constants.color[Math.floor(Math.random() * 3)],
-            team: constants.team[Math.floor(Math.random() * 3)]
-        }
+            team: constants.team[Math.floor(Math.random() * 3)],
+            inventory : Inventory.create()
+        });
 
-        var remotePlayer = new RemotePlayer(this, socket, playerSettings);
+        remotePlayer.sendInventory();
         remotePlayer.updateGrid(this.garden.getRawGrid());
 
         this.remotePlayers.push(remotePlayer);

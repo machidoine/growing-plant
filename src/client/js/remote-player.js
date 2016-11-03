@@ -24,10 +24,15 @@ define(['jquery','garden-element-map', 'garden-element-placer'],
                     this._game.changeGridWith(gridReceived);
                     console.log('receive gridElementReceive');
                 });
+
+                this._socket.on('updateInventory', (stock) => {
+                    this._game.updateInventory(stock);
+                    console.log(stock);
+                });
             }
 
             addGridElement(x, y, type, direction) {
-                console.log('send addGridelement')
+                console.log('send addGridelement');
                 this._socket.emit('addGridElement', {position: {x: x, y: y}, type: type, direction: direction});
             }
         }

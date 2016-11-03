@@ -37,8 +37,6 @@ module.exports = class Garden {
         this._plants.forEach((plant) => {
             var position = plant.nextPosition();
             var multiLayerGardeners = this._layerContainer.getGardenerAt(position);
-            console.log(multiLayerGardeners);
-            console.log('------------------------------------------------------------------');
             multiLayerGardeners.workOnPlant(plant); // TODO handle multiple element on same position in different layer
         })
     }

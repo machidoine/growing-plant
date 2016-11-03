@@ -18,7 +18,10 @@ define(    ['garden-ui', 'remote-player', 'inventory-menu-ui'],
             start() {
                 this._gardenUI = new GardenUI(this,  this._phaserGame.add.group());
                 this._remotePlayer = new RemotePlayer(this, this._socket)
-                this._inventoryUI = new InventoryMenuUI(this, {});
+                this._inventoryUI = new InventoryMenuUI(this, {
+                    seed : 0,
+                    stem : 0
+                });
             }
 
             get phaserGame() {
@@ -36,6 +39,10 @@ define(    ['garden-ui', 'remote-player', 'inventory-menu-ui'],
 
             makeSelectableFor(elementType) {
                 this._gardenUI.makeSelectableFor(elementType);
+            }
+
+            updateInventory(stock) {
+                this._inventoryUI.stock = stock;
             }
         }
     }

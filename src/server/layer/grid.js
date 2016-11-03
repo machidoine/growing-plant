@@ -51,10 +51,7 @@ module.exports = class Grid {
     }
 
     removePoint(point) {
-        console.log('removePoint');
-        console.log(this.points);
         this._points[this.getIndex(point.position)] = undefined;
-        console.log(this.points);
     }
 
 }

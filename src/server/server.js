@@ -16,7 +16,7 @@ var GrowingGame = require('./game/game');
 var router = express();
 var server = http.createServer(router);
 var io = socketio.listen(server);
-io.set('log level', 1);
+io.set('log level', 4);
 
 router.use(express.static(path.resolve(__dirname, '../client')));
 
