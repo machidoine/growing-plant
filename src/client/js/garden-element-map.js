@@ -3,7 +3,7 @@
 /**
  * Created by bguilloteau on 06/10/16.
  */
-define(['./constants'], (Constants) => {
+define(['./constants', './garden-element-sprite-name-engine'], (Constants, GardenElementSpritePropertiesProvider) => {
     return class GardenElementMap {
         constructor(container) {
             this.group = container;
@@ -11,9 +11,11 @@ define(['./constants'], (Constants) => {
         }
 
         add(gardenElement) {
-            var sprite = this.group.create(0, 0, 'plant-textures', gardenElement.type + '-' + gardenElement.team);
+            var spriteProperties = GardenElementSpritePropertiesProvider.provide(gardenElement);
+
+            var sprite = this.group.create(0, 0, 'plant-textures', spriteProperties.name);
             sprite.anchor.setTo(0.5, 0.5);
-            sprite.angle = Constants.directions[gardenElement.direction];
+            sprite.angle = spriteProperties.angle;
             sprite.x = sprite.width * gardenElement.position.x + 12.5;
             sprite.y = sprite.height * gardenElement.position.y + 12.5;
         }

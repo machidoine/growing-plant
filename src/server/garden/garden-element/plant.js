@@ -12,19 +12,20 @@ module.exports = class Plant extends GardenElement {
         this.body = [];
         this.garden = garden;
         this.lastBody = this.seed;
-        this.direction = seed.direction;
+        this._direction = seed.direction;
     }
 
     nextPosition() {
-        return this.translate(this.lastBody.position, this.direction);
+        return this.translate(this.lastBody.position, this._direction);
     }
 
     grow() {
         var newBody = utils.clone(this.lastBody);
+        newBody.previousDirection = this.lastBody.direction;
         newBody.type = "plant-body";
 
         newBody.position = this.nextPosition();
-        newBody.direction = this.direction;
+        newBody.direction = this._direction;
 
         this.garden.addBody(newBody, this);
         this.body.push(newBody);
@@ -49,6 +50,15 @@ module.exports = class Plant extends GardenElement {
 
     get seed() {
         return this._seed;
+    }
+
+    set direction(direction) {
+        this._direction = direction;
+        this.lastBody.direction = direction;
+    }
+
+    get direction() {
+        return this._direction;
     }
 };
 
