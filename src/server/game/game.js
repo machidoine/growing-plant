@@ -3,7 +3,7 @@
  */
 'use strict'
 
-var RemotePlayer = require('./remote-player');
+var Player = require('./player');
 var Garden = require('./../garden/garden');
 var Grid = require('./../layer/grid');
 var constants = require('./../utils/constants');
@@ -13,7 +13,7 @@ var Inventory = require('./../inventory/inventory');
 module.exports = class Game {
     constructor() {
         this.garden = null;
-        this.remotePlayers = [];
+        this.players = [];
     }
 
     start() {
@@ -24,8 +24,8 @@ module.exports = class Game {
         this.startWorldTime();
     }
 
-    addRemotePlayer(socket) {
-        var remotePlayer = new RemotePlayer( {
+    addPlayer(socket) {
+        var player = new Player( {
             game : this,
             socket : socket,
             color: constants.color[Math.floor(Math.random() * 3)],
@@ -33,10 +33,10 @@ module.exports = class Game {
             inventory : Inventory.create()
         });
 
-        remotePlayer.sendInventory();
-        remotePlayer.updateGrid(this.garden.getRawGrid());
+        player.sendInventory();
+        player.updateGrid(this.garden.getRawGrid());
 
-        this.remotePlayers.push(remotePlayer);
+        this.players.push(player);
     }
 
     startWorldTime() {
@@ -51,7 +51,7 @@ module.exports = class Game {
 
     broadcastUpdateGrid(data) {
         var me = this;
-        this.remotePlayers.forEach(function (player) {
+        this.players.forEach(function (player) {
             player.updateGrid(me.garden.getRawGrid());
         });
     }

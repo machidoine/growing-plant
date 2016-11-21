@@ -8,10 +8,10 @@ module.exports = class Inventory {
         this._stock = stock;
     }
 
-    provide(elementType, useIt) {
+    provide(elementType, useItCallback) {
         if(this.hasEnough(elementType)) {
             this.remove(elementType);
-            useIt();
+            useItCallback();
         }
     }
 

@@ -3,21 +3,21 @@
  * Created by bguilloteau on 12/10/16.
  */
 
-define(    ['garden-ui', 'remote-player', 'inventory-menu-ui'],
-    (GardenUI, RemotePlayer, InventoryMenuUI) => {
+define(    ['garden-ui', 'player', 'inventory-menu-ui'],
+    (GardenUI, Player, InventoryMenuUI) => {
         return class Game {
             constructor(phaserGame, socket) {
                 this._socket = socket;
                 this._phaserGame = phaserGame;
 
                 this._gardenUI = null;
-                this._remotePlayer = null;
+                this._player = null;
                 this._inventoryUI = null;
             }
 
             start() {
                 this._gardenUI = new GardenUI(this,  this._phaserGame.add.group());
-                this._remotePlayer = new RemotePlayer(this, this._socket)
+                this._player = new Player(this, this._socket)
                 this._inventoryUI = new InventoryMenuUI(this, {
                     seed : 0,
                     stem : 0
@@ -33,7 +33,7 @@ define(    ['garden-ui', 'remote-player', 'inventory-menu-ui'],
             }
 
             addGridElement(x, y, type, direction) {
-                this._remotePlayer.addGridElement(x, y, type, direction);
+                this._player.addGridElement(x, y, type, direction);
                 this._inventoryUI.isSelected = false;
             }
 

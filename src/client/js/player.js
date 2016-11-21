@@ -5,7 +5,7 @@
 
 define(['jquery','garden-element-map', 'garden-element-placer'],
     ($, GardenElementMap, GardenElementPlacer) => {
-        return class RemotePlayer {
+        return class Player {
             constructor(game, socket) {
                 this._game = game;
                 this._socket = socket;

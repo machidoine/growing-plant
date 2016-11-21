@@ -27,7 +27,7 @@ growingGame.start();
 io.on('connection', function (socket) {
     sockets.push(socket);
 
-    growingGame.addRemotePlayer(socket);
+    growingGame.addPlayer(socket);
 
     socket.on('disconnect', function () {
         sockets.splice(sockets.indexOf(socket), 1);
