@@ -3,23 +3,33 @@
  */
 'use strict'
 
+let ReflectionUtil = require('../utils/reflection-util');
+
 module.exports = class RemoteEventDispatcher {
     constructor(socket) {
         this._socket = socket;
     }
 
-    init(eventHandler, events) {
-        for (let eventName of events) {
+    init(eventHandler) {
 
-            if (typeof eventHandler[eventName] !== 'function') {
-                throw new Error('event handler "' + eventHandler + '" does not have the function "' + eventName + '"');
+        let onEvents = ReflectionUtil.listFunctionStartedBy(eventHandler, 'on');
+
+        for (let onEventName of onEvents) {
+
+            if (typeof eventHandler[onEventName] !== 'function') {
+                throw new Error('event handler "' + eventHandler + '" does not have the function "' + onEventName + '"');
             }
 
-            this._socket.on(eventName, (...args) => {
-                console.log('receive event %s', eventName);
-                eventHandler[eventName].apply(eventHandler, args);
+            this._socket.on(this.rename(onEventName), (...args) => {
+                console.log('receive event %s', onEventName);
+                eventHandler[onEventName].apply(eventHandler, args);
             });
         }
+    }
+
+    rename(onEvent) {
+        let event =  onEvent.substring(2);
+        return event.charAt(0).toLowerCase() + event.slice(1);
     }
 
     get sendEvent() {
@@ -33,4 +43,5 @@ module.exports = class RemoteEventDispatcher {
             }
         });
     }
+
 }

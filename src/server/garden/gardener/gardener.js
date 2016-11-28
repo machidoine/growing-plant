@@ -19,11 +19,6 @@ module.exports = class Gardener {
         this._garden.plants.push(plant);
     }
 
-    addStem(stemData) {
-        var stem = this._garden.gardenElementFactory.createStem(stemData);
-        this._garden.stemLayer.addElement(stem);
-    }
-
     get garden() {
         return this._garden;
     }

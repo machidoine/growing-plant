@@ -13,6 +13,8 @@ module.exports = class Plant extends GardenElement {
         this.garden = garden;
         this.lastBody = this.seed;
         this._direction = seed.direction;
+
+        this._age = 0;
     }
 
     nextPosition() {
@@ -60,6 +62,26 @@ module.exports = class Plant extends GardenElement {
     get direction() {
         return this._direction;
     }
+
+    makeOlder() {
+        this._age++;
+    }
+
+    collectSeed(callback) {
+        let totalSkillsPower = Object.keys(this._seed.skills).reduce((current, next) => {
+            return current + this._seed.skills[next];
+        }, 0);
+
+
+        console.log('totlaSkillPower : ', totalSkillsPower);
+
+        let min = 5;
+        let skillCoeff = 2;
+        console.log("result : ", (this._age++ % (min + (totalSkillsPower * skillCoeff))));
+        if((this._age++ % (min + (totalSkillsPower * skillCoeff))) === 0) {
+            let seed = {skills : utils.clone(this._seed.skills)};
+            console.log('generated seed : ', seed)
+            callback(seed, this._seed.team);
+        }
+    }
 };
-
-

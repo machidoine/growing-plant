@@ -8,11 +8,8 @@ module.exports = class UnboundGardener extends Gardener {
     }
 
     workOnPlant(plant) {
-        this.garden.replaceByMold(plant);
     }
 
     plant(seed) {}
-
-    addStem(stemData) {}
 
 }

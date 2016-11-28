@@ -21,23 +21,38 @@ module.exports = class Garden {
         this._gardenElementFactory = new GardenElementFactory(this);
         this._layerContainer = new LayerContainer(this._gardenElementFactory, this.boundaries);
         this._plantLayer = this._layerContainer.createLayer();
-        this._moldLayer = this._layerContainer.createLayer();
-        this._stemLayer = this._layerContainer.createLayer();
-    }
 
-    addElement(element) {
-        if (element.type === 'seed') {
-            this.addSeed(element);
-        } else if (element.type === 'stem') {
-            this.addStem(element);
-        }
+        this.newSeedEventHandler = {};
+        this.collectedSeedByTeam = {};
     }
 
     changeToNextDay() {
         this._plants.forEach((plant) => {
+            plant.makeOlder();
+
             var position = plant.nextPosition();
             var multiLayerGardeners = this._layerContainer.getGardenerAt(position);
             multiLayerGardeners.workOnPlant(plant); // TODO handle multiple element on same position in different layer
+
+            this.collectSeeds(plant);
+        })
+
+        this.dispatchSeedCollected();
+    }
+
+    collectSeeds(plant) {
+       plant.collectSeed((seed, team) => {
+            if(typeof this.collectedSeedByTeam[team] === 'undefined') {
+                this.collectedSeedByTeam[team] = [];
+            }
+            this.collectedSeedByTeam[team].push(seed);
+        });
+    }
+
+    dispatchSeedCollected() {
+        Object.keys(this.collectedSeedByTeam).forEach((team) => {
+            this.newSeedEventHandler[team](this.collectedSeedByTeam[team]);
+            this.collectedSeedByTeam[team] = [];
         })
     }
 
@@ -53,15 +68,41 @@ module.exports = class Garden {
     addSeed(seed) {
         var gardeners = this._layerContainer.getGardenerAt(seed.position);
         gardeners.plant(seed);
+
+        return true;
     }
 
-    addStem(stem) {
-        var gardeners = this._layerContainer.getGardenerAt(stem.position);
-        gardeners.addStem(stem);
+    removePlant(seedId) {
+        let plant = this.getPlantById(seedId);
+        this.removeAllPlantElement(plant);
+    }
+
+    changePlantDirection(seedId, direction) {
+        let plant = this.getPlantById(seedId);
+        plant.direction = direction;
+    }
+
+
+    removeAllPlantElement(plant) {
+        plant.bodies.forEach((body) => {
+            this._plantLayer.removeElement(body);
+        });
+        this._plantLayer.removeElement(plant.seed);
+        this._plants.splice(this._plants.indexOf(plant), 1);
+    }
+
+    getPlantById(seedId) {
+        return this.plants.find((plant) => {
+            return plant.seed.id === seedId;
+        })
     }
 
     addBody(body, plant) {
         this._plantLayer.addElement(this._gardenElementFactory.createPlantBody(body, plant));
+    }
+
+    addNewSeedPresentForTeam(team, handler) {
+        this.newSeedEventHandler[team] = handler;
     }
 
     get plants() {
@@ -72,25 +113,9 @@ module.exports = class Garden {
         return this._layerContainer;
     }
 
-    get stemLayer() {
-        return this._stemLayer;
-    }
-
     get plantLayer() {
         return this._plantLayer;
     }
-
-    replaceByMold(plant) {
-        plant.bodies.forEach((body) => {
-            var moldData = utils.clone(body);
-            moldData.type = 'mold';
-            this._moldLayer.addElement(this._gardenElementFactory.createMold(moldData));
-            this._plantLayer.removeElement(body);
-        });
-        this._plantLayer.removeElement(plant.seed);
-        this._plants.splice(this._plants.indexOf(plant), 1);
-    }
-
 
 
 

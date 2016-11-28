@@ -19,18 +19,19 @@ module.exports = class Game {
     start() {
         var plantGrid = new Grid(32, 24); // TODO externalize with and height
         this.garden = new Garden(plantGrid);
-        this.garden.addSeed({'position': {'x': 2, 'y': 20}, direction: "down", 'type': 'seed', 'team': 'team3'});
+        // this.garden.addSeed({'position': {'x': 2, 'y': 20}, direction: "down", 'type': 'seed', 'team': 'team3'});
 
         this.startWorldTime();
     }
 
     addPlayer(socket) {
-        var player = new Player( {
-            game : this,
-            socket : socket,
+        var player = new Player({
+            socket: socket,
+            game: this,
+            garden : this.garden,
             color: constants.color[Math.floor(Math.random() * 3)],
             team: constants.team[Math.floor(Math.random() * 3)],
-            inventory : Inventory.create()
+            inventory: Inventory.create()
         });
 
         player.sendInventory();
@@ -49,7 +50,7 @@ module.exports = class Game {
         }, 1000); // TODO externalize time to refresh
     }
 
-    broadcastUpdateGrid(data) {
+    broadcastUpdateGrid() {
         var me = this;
         this.players.forEach(function (player) {
             player.updateGrid(me.garden.getRawGrid());

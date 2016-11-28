@@ -62,7 +62,6 @@ module.exports = class LayerContainer {
         return points.every((element) => {
            return typeof element === 'undefined';
         });
-
     }
 
 

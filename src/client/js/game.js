@@ -3,10 +3,13 @@
  * Created by bguilloteau on 12/10/16.
  */
 
+var s;
+
 define(    ['garden-ui', 'player', 'inventory-menu-ui'],
     (GardenUI, Player, InventoryMenuUI) => {
         return class Game {
             constructor(phaserGame, socket) {
+                s = socket;
                 this._socket = socket;
                 this._phaserGame = phaserGame;
 

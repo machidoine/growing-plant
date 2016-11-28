@@ -20,14 +20,16 @@ define(['jquery','garden-element-map', 'garden-element-placer'],
                 });
 
                 this._socket.on('gridElementReceive', (gridReceived) => {
-                    $('.debug').html(JSON.stringify(gridReceived, null, 4).replace(/(?:\r\n|\r|\n)/g, '<br />'));
+                    $('.debug').html(JSON.stringify(gridReceived, null, 4));
                     this._game.changeGridWith(gridReceived);
                     console.log('receive gridElementReceive');
                 });
 
                 this._socket.on('updateInventory', (stock) => {
                     this._game.updateInventory(stock);
-                    console.log(stock);
+                    //console.log(stock);
+
+                    $('.inventory').html(JSON.stringify(stock, null, 4));
                 });
             }
 
