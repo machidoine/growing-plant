@@ -3,11 +3,12 @@
  */
 'use strict'
 
-var Player = require('./player');
-var Garden = require('./../garden/garden');
-var Grid = require('./../layer/grid');
-var constants = require('./../utils/constants');
-var Inventory = require('./../inventory/inventory');
+let Player = require('./player');
+let Garden = require('./../garden/garden');
+let Grid = require('./../layer/grid');
+let constants = require('./../utils/constants');
+let Inventory = require('./../inventory/inventory');
+let config = require('../config')
 
 
 module.exports = class Game {
@@ -17,15 +18,14 @@ module.exports = class Game {
     }
 
     start() {
-        var plantGrid = new Grid(32, 24); // TODO externalize with and height
+        let plantGrid = new Grid(config.game.world.width, config.game.world.height);
         this.garden = new Garden(plantGrid);
-        // this.garden.addSeed({'position': {'x': 2, 'y': 20}, direction: "down", 'type': 'seed', 'team': 'team3'});
 
         this.startWorldTime();
     }
 
     addPlayer(socket) {
-        var player = new Player({
+        let player = new Player({
             socket: socket,
             game: this,
             garden : this.garden,
@@ -41,17 +41,17 @@ module.exports = class Game {
     }
 
     startWorldTime() {
-        var me = this;
+        let me = this;
         setInterval(function () {
             me.garden.changeToNextDay();
 
             me.broadcastUpdateGrid();
 
-        }, 1000); // TODO externalize time to refresh
+        }, config.game.world.dayTime);
     }
 
     broadcastUpdateGrid() {
-        var me = this;
+        let me = this;
         this.players.forEach(function (player) {
             player.updateGrid(me.garden.getRawGrid());
         });

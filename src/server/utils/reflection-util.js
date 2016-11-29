@@ -4,6 +4,8 @@
  * Created by bguilloteau on 28/11/16.
  */
 
+let winston = require('winston');
+
 module.exports = class ReflectionUtil {
     constructor() {
     }
@@ -11,7 +13,7 @@ module.exports = class ReflectionUtil {
     static listFunctionStartedBy(object, pattern) {
         let properties = this.getAllFunction(object);
 
-        console.log(properties);
+        winston.silly(properties);
 
         return properties.filter((property) => {
             return typeof object[property] === 'function' && property.startsWith(pattern);

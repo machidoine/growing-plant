@@ -38,7 +38,7 @@ module.exports = class Player {
         this._remoteEventHandler.sendEvent.updateInventory(this._inventory.stock);
     }
 
-    onCreateCombinedSeed(seedIds) {
+    onCombineSeed(seedIds) {
         this._inventory.useSeeds(seedIds, (seeds) => {
             return this._seedLab.combineSeeds(seeds, (newSeed) => {
                 return this._inventory.add(newSeed);
@@ -47,8 +47,6 @@ module.exports = class Player {
 
         this.sendInventory();
     }
-
-    // TODO on a fait createcombinedSeed, il faut implémenter le reste (addSeed, deleteSeed, changeSeedDirection)
 
     onAddSeed(seedId, position, direction) {
         // checkPosition(position);

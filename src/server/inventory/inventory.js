@@ -4,15 +4,16 @@
 
 
 let Seed = require('./seed');
+let config = require('../config')
 
 module.exports = class Inventory {
-    constructor(stock) {
+    constructor(initialStock) {
         this._stockById = {};
 
-        for(let seed of stock) {
+        for(let seedProperties of initialStock) {
+            let seed = Seed.createBySkill(seedProperties);
             this._stockById[seed.id] = seed;
         }
-
     }
 
     useSeeds(seedIds, callback) {
@@ -87,12 +88,6 @@ module.exports = class Inventory {
     }
 
     static create() {
-        return new Inventory([
-            Seed.attack(),
-            Seed.defense(),
-            Seed.growth(),
-            Seed.fertility(),
-            Seed.victory()
-        ]);
+        return new Inventory(config.game.player.inventory.initialStock);
     }
 }

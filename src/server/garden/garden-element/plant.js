@@ -1,8 +1,10 @@
 'use strict'
+let winston = require('winston');
 
-var GardenElement = require('./garden-element');
-var utils = require("./../../utils/utils.js");
-var constants = require('./../../utils/constants');
+let GardenElement = require('./garden-element');
+let utils = require("./../../utils/utils.js");
+let constants = require('./../../utils/constants');
+let config = require('../../config')
 
 module.exports = class Plant extends GardenElement {
     constructor(garden, seed) {
@@ -22,7 +24,7 @@ module.exports = class Plant extends GardenElement {
     }
 
     grow() {
-        var newBody = utils.clone(this.lastBody);
+        let newBody = utils.clone(this.lastBody);
         newBody.previousDirection = this.lastBody.direction;
         newBody.type = "plant-body";
 
@@ -39,7 +41,7 @@ module.exports = class Plant extends GardenElement {
     }
 
     translate(position, direction) {
-        var d = constants.directions[direction];
+        let d = constants.directions[direction];
         return {
             x : position.x + d.x,
             y: position.y + d.y,
@@ -73,14 +75,16 @@ module.exports = class Plant extends GardenElement {
         }, 0);
 
 
-        console.log('totlaSkillPower : ', totalSkillsPower);
+        winston.debug('totalSkillPower : ', totalSkillsPower);
 
-        let min = 5;
-        let skillCoeff = 2;
-        console.log("result : ", (this._age++ % (min + (totalSkillsPower * skillCoeff))));
+        let min = config.game.garden.plant.seed.minTimeToBeCollected;
+        let skillCoeff = config.game.garden.plant.seed.skillCoeffToBeCollected;
+
+        winston.debug("result : ", (this._age++ % (min + (totalSkillsPower * skillCoeff))));
+
         if((this._age++ % (min + (totalSkillsPower * skillCoeff))) === 0) {
             let seed = {skills : utils.clone(this._seed.skills)};
-            console.log('generated seed : ', seed)
+            winston.debug('generated seed : ', seed)
             callback(seed, this._seed.team);
         }
     }

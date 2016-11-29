@@ -10,6 +10,13 @@ module.exports = class Seed {
     constructor() {
     }
 
+    static createBySkill(skills) {
+        return {
+            id : IdGenerator.generate(),
+            skills : skills
+        }
+    }
+
     static create(seedProperties) {
         seedProperties.id = IdGenerator.generate();
 

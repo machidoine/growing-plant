@@ -20,6 +20,7 @@
     "gulp-uglify": "latest",
     "gulp-util": "latest",
     "mocha":"latest",
-    "should":"latest"
+    "should":"latest",
+    "winston": "2.3.0"
   }
 }
