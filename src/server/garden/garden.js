@@ -3,13 +3,13 @@
  */
 'use strict'
 
-var GardenBoundaries = require('./boundaries');
-var Grid = require('./../layer/grid');
+let GardenBoundaries = require('./boundaries');
+let Grid = require('./../layer/grid');
 
-var GardenElementFactory = require('./garden-element/garden-element-factory');
-var utils = require("./../utils/utils.js");
+let GardenElementFactory = require('./garden-element/garden-element-factory');
+let utils = require("./../utils/utils.js");
 
-var LayerContainer = require("./../layer/layer-container");
+let LayerContainer = require("./../layer/layer-container");
 
 module.exports = class Garden {
     constructor(plantGrid) {
@@ -30,8 +30,8 @@ module.exports = class Garden {
         this._plants.forEach((plant) => {
             plant.makeOlder();
 
-            var position = plant.nextPosition();
-            var multiLayerGardeners = this._layerContainer.getGardenerAt(position);
+            let position = plant.nextPosition();
+            let multiLayerGardeners = this._layerContainer.getGardenerAt(position);
             multiLayerGardeners.workOnPlant(plant); // TODO handle multiple element on same position in different layer
 
             this.collectSeeds(plant);
@@ -66,7 +66,7 @@ module.exports = class Garden {
     }
 
     addSeed(seed) {
-        var gardeners = this._layerContainer.getGardenerAt(seed.position);
+        let gardeners = this._layerContainer.getGardenerAt(seed.position);
         gardeners.plant(seed);
 
         return true;

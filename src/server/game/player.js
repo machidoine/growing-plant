@@ -3,8 +3,8 @@
  */
 'use strict'
 
-var RemoteEventHandler = require('./remote-event-handler');
-var SeedLab = require('../inventory/seed-lab');
+let RemoteEventHandler = require('./remote-event-handler');
+let SeedLab = require('../inventory/seed-lab');
 
 module.exports = class Player {
     constructor(settings) {

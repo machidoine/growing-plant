@@ -1,6 +1,6 @@
 'use strict'
 
-var Gardener = require('./gardener');
+let Gardener = require('./gardener');
 
 module.exports = class PlantGardener extends Gardener {
     constructor(garden, plant) {

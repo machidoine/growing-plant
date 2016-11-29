@@ -13,15 +13,15 @@ module.exports = class Grid {
     }
 
     initPoints() {
-        for (var i = 0; i < this._width; i++) {
-            for (var j = 0; j < this._height; j++) {
+        for (let i = 0; i < this._width; i++) {
+            for (let j = 0; j < this._height; j++) {
                 this._points.push(undefined);
             }
         }
     }
 
     get points() {
-        var p = [];
+        let p = [];
         this._points.forEach(function (e) {
             if (typeof e !== 'undefined') {
                 p.push(e);

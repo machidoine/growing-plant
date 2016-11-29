@@ -3,7 +3,7 @@
  */
 'use strict'
 
-var Layer = require('./layer');
+let Layer = require('./layer');
 
 module.exports = class LayerContainer {
     constructor(gardenElementFactory, boundaries) {
@@ -19,7 +19,7 @@ module.exports = class LayerContainer {
     }
 
     createLayer() {
-        var layer = new Layer(this._gardenElementFactory, this._boundaries);
+        let layer = new Layer(this._gardenElementFactory, this._boundaries);
         this.layers.push(layer);
 
         return layer;
@@ -36,8 +36,8 @@ module.exports = class LayerContainer {
             return this._gardenElementFactory.createUnboundElement().gardener;
         }
 
-        var elements = this.layers.map((currentLayer) => {
-            var element = currentLayer.getElementAt(position);
+        let elements = this.layers.map((currentLayer) => {
+            let element = currentLayer.getElementAt(position);
 
             return typeof element !== 'undefined' ? element.gardener : element;
         });
@@ -46,7 +46,7 @@ module.exports = class LayerContainer {
             return this._gardenElementFactory.createNoElement().gardener;
         }
 
-        var usedElement = elements.filter((element) => {
+        let usedElement = elements.filter((element) => {
            return typeof element !== 'undefined'
         });
 

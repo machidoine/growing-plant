@@ -3,7 +3,7 @@
  */
 'use strict'
 
-var Grid = require('./grid');
+let Grid = require('./grid');
 
 module.exports = class Layer {
     constructor(gardenElementFactory, boundaries) {
@@ -23,7 +23,7 @@ module.exports = class Layer {
             return this._gardenElementFactory.createUnboundElement();
         }
 
-        var element = this._grid.getPoint(position);
+        let element = this._grid.getPoint(position);
 
         if(typeof element === 'undefined') {
             return this._gardenElementFactory.createNoElement();

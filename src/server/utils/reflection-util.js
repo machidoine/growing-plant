@@ -21,7 +21,7 @@ module.exports = class ReflectionUtil {
     }
 
     static getAllFunction(obj) {
-        var props = [];
+        let props = [];
 
         do {
             props = props.concat(Object.getOwnPropertyNames(obj));
