@@ -16,20 +16,22 @@ module.exports = {
         world: {
             width: 32,
             height: 24,
-            dayTime: 1000
+            dayTime: 1000,
+            refreshTime:500
         },
         garden: {
             plant: {
-                seed: {
-                    minTimeToBeCollected: 3,
+                collected : {
+                    minAgeToBeCollected: 3,
                     skillCoeffToBeCollected: 3
-                }
+                },
+                maxGrowth:20
             }
         },
         player: {
             max: 4,
             inventory: {
-                initialStock: [{'attack': 1}, {'defense': 1}, {'fertility': 1}, {'victory': 1}, {'growth': 1}],
+                initialStock: [{'attack': 1}, {'defense': 1}, {'fertility': 1}, {'victory': 1}, {'growth': 10}],
                 maxStock: 20
             }
         }

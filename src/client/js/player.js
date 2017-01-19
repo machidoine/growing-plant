@@ -27,7 +27,7 @@ define(['jquery','garden-element-map', 'garden-element-placer'],
 
                 this._socket.on('updateInventory', (stock) => {
                     this._game.updateInventory(stock);
-                    //console.log(stock);
+                    console.log('receive inventory');
 
                     $('.inventory').html(JSON.stringify(stock, null, 4));
                 });

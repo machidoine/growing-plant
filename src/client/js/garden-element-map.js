@@ -11,23 +11,36 @@ define(['./constants', './garden-element-sprite-name-engine'], (Constants, Garde
         }
 
         add(gardenElement) {
-            var spriteProperties = GardenElementSpritePropertiesProvider.provide(gardenElement);
+            let bodyProperties = GardenElementSpritePropertiesProvider.provide(gardenElement);
 
-            var sprite = this.group.create(0, 0, 'plant-textures', spriteProperties.name);
-            sprite.anchor.setTo(0.5, 0.5);
-            sprite.angle = spriteProperties.angle;
-            sprite.x = sprite.width * gardenElement.position.x + 12.5;
-            sprite.y = sprite.height * gardenElement.position.y + 12.5;
+            this.createSprite(bodyProperties.name + '-' + gardenElement.team, bodyProperties.angle, gardenElement.position);
+
+            Object.keys(gardenElement.skills).forEach((skill) => {
+                this.createSprite(bodyProperties.name + '-' + skill, bodyProperties.angle, gardenElement.position);
+            });
         }
+
+        createSprite(name, angle, position) {
+            let sprite = this.group.create(0, 0, 'plant-textures', name);
+            let spritePosition = {
+                x: sprite.width * position.x + 12.5,
+                y: sprite.height * position.y + 12.5
+            }
+
+            sprite.anchor.setTo(0.5, 0.5);
+            sprite.angle = angle;
+            sprite.x = spritePosition.x;
+            sprite.y = spritePosition.y;
+        }
+
 
         clear() {
             this.group.removeAll();
         }
 
         addAll(gardenElements) {
-            var me = this;
-            gardenElements.forEach(function (gardenElement) {
-                me.add(gardenElement);
+            gardenElements.forEach((gardenElement) => {
+                this.add(gardenElement);
             });
         }
 

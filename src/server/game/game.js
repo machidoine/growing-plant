@@ -8,13 +8,14 @@ let Garden = require('./../garden/garden');
 let Grid = require('./../layer/grid');
 let constants = require('./../utils/constants');
 let Inventory = require('./../inventory/inventory');
-let config = require('../config')
-
+let config = require('../config');
+let hash = require('object-hash');
 
 module.exports = class Game {
     constructor() {
         this.garden = null;
         this.players = [];
+        this.lastHashGrid = "";
     }
 
     start() {
@@ -28,7 +29,7 @@ module.exports = class Game {
         let player = new Player({
             socket: socket,
             game: this,
-            garden : this.garden,
+            garden: this.garden,
             color: constants.color[Math.floor(Math.random() * 3)],
             team: constants.team[Math.floor(Math.random() * 3)],
             inventory: Inventory.create()
@@ -41,20 +42,28 @@ module.exports = class Game {
     }
 
     startWorldTime() {
-        let me = this;
-        setInterval(function () {
-            me.garden.changeToNextDay();
+        setInterval(() => {
+            this.garden.changeToNextDay();
 
-            me.broadcastUpdateGrid();
+            this.broadcastUpdateGrid();
 
-        }, config.game.world.dayTime);
+        }, config.game.world.refreshTime);
     }
 
     broadcastUpdateGrid() {
-        let me = this;
-        this.players.forEach(function (player) {
-            player.updateGrid(me.garden.getRawGrid());
+        let grid = this.garden.getRawGrid();
+        let hashGrid = hash(grid)
+        if(hashGrid !== this.lastHashGrid) {
+            this.players.forEach((player) => {
+                player.updateGrid(grid);
+            });
+            this.lastHashGrid = hashGrid;
+        }
+
+        this.players.forEach((player) => {
+            player.sendInventory();
         });
+
     }
 
     addGridElement(gardenElement) {    // TODO rename this method

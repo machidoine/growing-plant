@@ -13,12 +13,12 @@ define(['./constants', './util/proxy'], (Constants, proxy) => {
                     var bodyAngle = Constants.bodyAngle[gardenElement.previousDirection][gardenElement.direction];
                     return {
                         'angle': bodyAngle.angle,
-                        'name': bodyAngle.isElbow ? 'elbow' : gardenElement.type
+                        'name': bodyAngle.isElbow ? 'plant-elbow' : gardenElement.type
                     }
                 }
             }
 
-            var properties = proxy({
+            return proxy({
                 'plant-body': bodyAngleWithElbowNamed('elbow'),
                 'plant-head': bodyAngleWithElbowNamed('elbow')
             }).withDefaultValue(() => {
@@ -27,10 +27,6 @@ define(['./constants', './util/proxy'], (Constants, proxy) => {
                     'name': gardenElement.type
                 }
             })[gardenElement.type]();
-
-            properties.name += '-' + gardenElement.team
-
-            return properties;
         }
 
 

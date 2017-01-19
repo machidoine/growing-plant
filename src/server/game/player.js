@@ -5,6 +5,7 @@
 
 let RemoteEventHandler = require('./remote-event-handler');
 let SeedLab = require('../inventory/seed-lab');
+let hash = require('object-hash');
 
 module.exports = class Player {
     constructor(settings) {
@@ -16,10 +17,10 @@ module.exports = class Player {
         this._color = settings.color;
         this._team = settings.team;
         this._inventory = settings.inventory;
+        this._lastInventoryHash = "";
 
         this._remoteEventHandler = new RemoteEventHandler(settings.socket);
         this._seedLab = new SeedLab();
-
 
         this.initComingEvent();
     }
@@ -31,11 +32,15 @@ module.exports = class Player {
 
     updateGrid(grid) {
         this._remoteEventHandler.sendEvent.gridElementReceive(grid);
-        this.sendInventory();
     }
 
     sendInventory() {
-        this._remoteEventHandler.sendEvent.updateInventory(this._inventory.stock);
+        let stock = this._inventory.stock;
+        let hashStock = hash(stock);
+        if(hashStock !== this._lastInventoryHash) {
+            this._remoteEventHandler.sendEvent.updateInventory(stock);
+            this._lastInventoryHash = hashStock;
+        }
     }
 
     onCombineSeed(seedIds) {

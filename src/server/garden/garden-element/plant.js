@@ -4,7 +4,8 @@ let winston = require('winston');
 let GardenElement = require('./garden-element');
 let utils = require("./../../utils/utils.js");
 let constants = require('./../../utils/constants');
-let config = require('../../config')
+let GardenSkillsRules = require('../garden-skills-rules');
+let config = require('../../config');
 
 module.exports = class Plant extends GardenElement {
     constructor(garden, seed) {
@@ -17,6 +18,7 @@ module.exports = class Plant extends GardenElement {
         this._direction = seed.direction;
 
         this._age = 0;
+        this._tick = 0;
     }
 
     nextPosition() {
@@ -24,20 +26,22 @@ module.exports = class Plant extends GardenElement {
     }
 
     grow() {
-        let newBody = utils.clone(this.lastBody);
-        newBody.previousDirection = this.lastBody.direction;
-        newBody.type = "plant-body";
+        GardenSkillsRules.growAged(this, () => {
+            let newBody = utils.clone(this.lastBody);
+            newBody.previousDirection = this.lastBody.direction;
+            newBody.type = "plant-body";
 
-        newBody.position = this.nextPosition();
-        newBody.direction = this._direction;
+            newBody.position = this.nextPosition();
+            newBody.direction = this._direction;
 
-        this.garden.addBody(newBody, this);
-        this.body.push(newBody);
-        if (this.lastBody.type !== 'seed') {
-            this.lastBody.type = 'plant-body';
-        }
-        newBody.type = 'plant-head';
-        this.lastBody = newBody;
+            this.garden.addBody(newBody, this);
+            this.body.push(newBody);
+            if (this.lastBody.type !== 'seed') {
+                this.lastBody.type = 'plant-body';
+            }
+            newBody.type = 'plant-head';
+            this.lastBody = newBody;
+        });
     }
 
     translate(position, direction) {
@@ -66,26 +70,34 @@ module.exports = class Plant extends GardenElement {
     }
 
     makeOlder() {
-        this._age++;
+        let dayTime = config.game.world.dayTime;
+        let refreshTime = config.game.world.refreshTime;
+        this._tick++;
+
+        if(this._tick % (dayTime / refreshTime) === 0) {
+            this._age++;
+        }
     }
 
     collectSeed(callback) {
-        let totalSkillsPower = Object.keys(this._seed.skills).reduce((current, next) => {
-            return current + this._seed.skills[next];
-        }, 0);
-
-
-        winston.debug('totalSkillPower : ', totalSkillsPower);
-
-        let min = config.game.garden.plant.seed.minTimeToBeCollected;
-        let skillCoeff = config.game.garden.plant.seed.skillCoeffToBeCollected;
-
-        winston.debug("result : ", (this._age++ % (min + (totalSkillsPower * skillCoeff))));
-
-        if((this._age++ % (min + (totalSkillsPower * skillCoeff))) === 0) {
+        GardenSkillsRules.collectSeed(this, () => {
             let seed = {skills : utils.clone(this._seed.skills)};
-            winston.debug('generated seed : ', seed)
+            winston.debug('age : ', this._age);
+            winston.debug('generated seed : ', seed);
             callback(seed, this._seed.team);
-        }
+        });
     }
+
+    get seed() {
+        return this._seed;
+    }
+
+    get age() {
+        return this._age;
+    }
+
+    get tick() {
+        return this._tick;
+    }
+
 };

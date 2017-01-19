@@ -71,7 +71,7 @@
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
 	"sourceSize":{"w":25,"h":25}
 },
-"fork-team3":
+"plant-fork-team3":
 {
 	"frame" : {"x":50,"y":50,"w":25,"h":25},
 	"rotated": false,
@@ -79,7 +79,7 @@
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
 	"sourceSize":{"w":25,"h":25}
 },
-"fork-team2":
+"plant-fork-team2":
 {
 	"frame" : {"x":50,"y":25,"w":25,"h":25},
 	"rotated": false,
@@ -87,7 +87,7 @@
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
 	"sourceSize":{"w":25,"h":25}
 },
-"fork-team1":
+"plant-fork-team1":
 {
 	"frame" : {"x":50,"y":0,"w":25,"h":25},
 	"rotated": false,
@@ -95,7 +95,7 @@
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
 	"sourceSize":{"w":25,"h":25}
 },
-"elbow-team3":
+"plant-elbow-team3":
 {
 	"frame" : {"x":125,"y":50,"w":25,"h":25},
 	"rotated": false,
@@ -103,7 +103,7 @@
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
 	"sourceSize":{"w":25,"h":25}
 },
-"elbow-team2":
+"plant-elbow-team2":
 {
 	"frame" : {"x":125,"y":25,"w":25,"h":25},
 	"rotated": false,
@@ -111,17 +111,9 @@
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
 	"sourceSize":{"w":25,"h":25}
 },
-"elbow-team1":
+"plant-elbow-team1":
 {
 	"frame" : {"x":125,"y":0,"w":25,"h":25},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
-	"sourceSize":{"w":25,"h":25}
-},
-"plant-body-team3":
-{
-	"frame" : {"x":25,"y":50,"w":25,"h":25},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
@@ -138,6 +130,14 @@
 "plant-body-team1":
 {
 	"frame" : {"x":25,"y":0,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-body-team3":
+{
+	"frame" : {"x":25,"y":50,"w":25,"h":25},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
@@ -174,10 +174,170 @@
 	"trimmed": false,
 	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
 	"sourceSize":{"w":25,"h":25}
+},
+"seed-attack":
+{
+	"frame" : {"x":0,"y":175,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"seed-defense":
+{
+	"frame" : {"x":25,"y":175,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"seed-growth":
+{
+	"frame" : {"x":50,"y":175,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"seed-fertility":
+{
+	"frame" : {"x":75,"y":175,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"seed-victory":
+{
+	"frame" : {"x":100,"y":175,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-elbow-attack":
+{
+	"frame" : {"x":0,"y":150,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-elbow-defense":
+{
+	"frame" : {"x":25,"y":150,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-elbow-growth":
+{
+	"frame" : {"x":50,"y":150,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-elbow-fertility":
+{
+	"frame" : {"x":75,"y":150,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-elbow-victory":
+{
+	"frame" : {"x":100,"y":150,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-body-attack":
+{
+	"frame" : {"x":0,"y":100,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-body-defense":
+{
+	"frame" : {"x":25,"y":100,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-body-growth":
+{
+	"frame" : {"x":50,"y":100,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-body-fertility":
+{
+	"frame" : {"x":75,"y":100,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-body-victory":
+{
+	"frame" : {"x":100,"y":100,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-head-attack":
+{
+	"frame" : {"x":0,"y":125,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-head-defense":
+{
+	"frame" : {"x":25,"y":125,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-head-growth":
+{
+	"frame" : {"x":50,"y":125,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-head-fertility":
+{
+	"frame" : {"x":75,"y":125,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
+},
+"plant-head-victory":
+{
+	"frame" : {"x":100,"y":125,"w":25,"h":25},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize":{"x":0,"y":0,"w":25,"h":25},
+	"sourceSize":{"w":25,"h":25}
 }
 },
 "meta": {
-	"size": {"w":500,"h":100},
+	"size": {"w":500,"h":200},
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:00:00:00$"
 }}
