@@ -5,6 +5,9 @@
   "main": "server.js",
   "repository": "",
   "author": "ThuesdayDevTeam",
+  "scripts": {
+    "start" : "gulp"
+  },
   "dependencies": {
     "async": "~0.2.8",
     "express": "~3.2.4",
@@ -20,6 +23,8 @@
     "gulp-sass": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
+    "gulp-typescript":"3.1.4",
+    "typescript":"2.1.5",
     "mocha":"latest",
     "should":"latest",
     "winston": "2.3.0"

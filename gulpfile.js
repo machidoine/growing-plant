@@ -1,25 +1,27 @@
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var sass = require('gulp-sass');
-var coffee = require('gulp-coffee');
-var concat = require('gulp-concat');
+let gulp = require('gulp');
+let gutil = require('gulp-util');
+let sass = require('gulp-sass');
+let coffee = require('gulp-coffee');
+let concat = require('gulp-concat');
+let ts = require('gulp-typescript');
 
 gulp.task('sass', function() {
-  gulp.src('client/scss/growing-plant.scss')
+  gulp.src('src/client/scss/growing-plant.scss')
   .pipe(sass({style: 'expanded'}).on('error', sass.logError))
   .pipe(gulp.dest('client/css'))
 });
 
-gulp.task('coffee', function() {
-  gulp.src('client/coffee/**/*.coffee')
-    .pipe(coffee({bare: true}).on('error', gutil.log))
-    .pipe(concat('growing-plant.app.js'))
-    .pipe(gulp.dest('client/js'));
+
+gulp.task('ts', function() {
+    return gulp.src('src/client/inventory/ts/**/*.ts')
+        .pipe(ts({noImplicitAny: true, target:'ES6', module:'amd'}).on('error', gutil.log))
+        .pipe(gulp.dest('src/client/inventory'));
 });
 
 gulp.task('watch',function(){
-	gulp.watch('client/scss/**/*.scss', ['sass']);
-	gulp.watch('client/coffee/**/*.coffee', ['coffee']);
-})
+	gulp.watch('src/client/scss/**/*.scss', ['sass']);
+    gulp.watch('src/client/**/*.ts', ['ts']);
 
-gulp.task('default',['sass', 'coffee', 'watch']);
+});
+
+gulp.task('default',['sass', 'ts', 'watch']);
