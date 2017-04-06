@@ -31,20 +31,20 @@ module.exports = class Player {
     }
 
     updateGrid(grid) {
-        this._remoteEventHandler.sendEvent.gridElementReceive(grid);
+        this._remoteEventHandler.sendEvent.gridElementReceive({seeds : grid}); // TODO ce ne sont pas des seeds, il faudra le changer
     }
 
     sendInventory() {
         let stock = this._inventory.stock;
         let hashStock = hash(stock);
         if(hashStock !== this._lastInventoryHash) {
-            this._remoteEventHandler.sendEvent.updateInventory(stock);
+            this._remoteEventHandler.sendEvent.updateInventory({seeds : stock});
             this._lastInventoryHash = hashStock;
         }
     }
 
-    onCombineSeed(seedIds) {
-        this._inventory.useSeeds(seedIds, (seeds) => {
+    onCombineSeeds(args) {
+        this._inventory.useSeeds(args.seeds, (seeds) => {
             return this._seedLab.combineSeeds(seeds, (newSeed) => {
                 return this._inventory.add(newSeed);
             });
@@ -53,11 +53,14 @@ module.exports = class Player {
         this.sendInventory();
     }
 
-    onAddSeed(seedId, position, direction) {
-        // checkPosition(position);
-        this._inventory.provide(seedId, (seed) => {
-            seed.position = position;
-            seed.direction = direction;
+    onAddSeed(args) { // seedId, position, direction
+        console.log(args.seedId);
+        console.log(args.position);
+        console.log(args.direction);
+
+        this._inventory.provide(args.seedId, (seed) => {
+            seed.position = args.position;
+            seed.direction = args.direction;
             seed.team = this._team;
             seed.type = 'seed';
             return this._garden.addSeed(seed);
@@ -71,6 +74,7 @@ module.exports = class Player {
     }
 
     onRemoveSeed(seedId) {
+        console.log("remove seed ", seedId);
         this._garden.removePlant(seedId);
         this.game.broadcastUpdateGrid();
     }

@@ -19,7 +19,8 @@ let winston = require('winston');
 let router = express();
 let server = http.createServer(router);
 let io = socketio.listen(server);
-io.set('log level', config.server.log.level);
+io.set('log level', config.server.log.winston.level);
+
 
 winston.level = config.server.log.winston.level;
 
@@ -31,6 +32,7 @@ let growingGame = new GrowingGame();
 growingGame.start();
 
 io.on('connection', function (socket) {
+    console.log("new connection !!");
     sockets.push(socket);
 
     growingGame.addPlayer(socket);
