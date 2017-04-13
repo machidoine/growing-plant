@@ -22,8 +22,8 @@ module.exports = {
         garden: {
             plant: {
                 collected : {
-                    minAgeToBeCollected: 3,
-                    skillCoeffToBeCollected: 3
+                    minAgeToBeCollected: 30,
+                    skillCoeffToBeCollected: 10
                 },
                 maxGrowth:20
             }
