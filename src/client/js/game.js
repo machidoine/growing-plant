@@ -32,7 +32,7 @@ define(    ['garden-ui', 'player', 'inventory-menu-ui'],
             }
 
             changeGridWith(gridReceived) {
-                this._gardenUI.changeGridWith(gridReceived);
+                this._gardenUI.changeGridWith(gridReceived.seeds);
             }
 
             addGridElement(x, y, type, direction) {
