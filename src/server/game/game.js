@@ -10,6 +10,7 @@ let constants = require('./../utils/constants');
 let Inventory = require('./../inventory/inventory');
 let config = require('../config');
 let hash = require('object-hash');
+let InfiniteBoundaries = require('./../garden/infinite-boundaries');
 
 module.exports = class Game {
     constructor() {
@@ -19,8 +20,7 @@ module.exports = class Game {
     }
 
     start() {
-        let plantGrid = new Grid(config.game.world.width, config.game.world.height);
-        this.garden = new Garden(plantGrid);
+        this.garden = new Garden(new InfiniteBoundaries());
 
         this.startWorldTime();
     }

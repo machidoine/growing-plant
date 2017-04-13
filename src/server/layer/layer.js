@@ -9,7 +9,7 @@ module.exports = class Layer {
     constructor(gardenElementFactory, boundaries) {
         this._gardenElementFactory = gardenElementFactory;
         this._boundaries = boundaries;
-        this._grid = new Grid(boundaries.width, boundaries.height);
+        this._grid = new Grid(boundaries);
         this._elements = [];
     }
 

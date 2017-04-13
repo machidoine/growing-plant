@@ -3,23 +3,17 @@
  */
 'use strict'
 
-let GardenBoundaries = require('./boundaries');
-let Grid = require('./../layer/grid');
-
 let GardenElementFactory = require('./garden-element/garden-element-factory');
 let utils = require("./../utils/utils.js");
 
 let LayerContainer = require("./../layer/layer-container");
 
 module.exports = class Garden {
-    constructor(plantGrid) {
-        this.width = plantGrid.width;
-        this.height = plantGrid.height;
-        this.boundaries = new GardenBoundaries(this);
+    constructor(boundaries) {
         this._plants = [];
 
         this._gardenElementFactory = new GardenElementFactory(this);
-        this._layerContainer = new LayerContainer(this._gardenElementFactory, this.boundaries);
+        this._layerContainer = new LayerContainer(this._gardenElementFactory, boundaries);
         this._plantLayer = this._layerContainer.createLayer();
 
         this.newSeedEventHandler = {};

@@ -5,37 +5,13 @@
 
 
 module.exports = class Grid {
-    constructor(width, height) {
-        this._width = width;
-        this._height = height;
-        this._points = [];
-        this.initPoints();
-    }
-
-    initPoints() {
-        for (let i = 0; i < this._width; i++) {
-            for (let j = 0; j < this._height; j++) {
-                this._points.push(undefined);
-            }
-        }
+    constructor(boundaries) {
+        this._boundaries = boundaries;
+        this._points = {};
     }
 
     get points() {
-        let p = [];
-        this._points.forEach(function (e) {
-            if (typeof e !== 'undefined') {
-                p.push(e);
-            }
-        });
-        return p;
-    }
-
-    get width() {
-        return this._width;
-    }
-
-    get height() {
-        return this._height;
+        return Object.keys(this._points).map(k => this._points[k]);
     }
 
     getPoint(position) {
@@ -47,11 +23,11 @@ module.exports = class Grid {
     }
 
     getIndex(position) {
-        return position.y * this._width + position.x;
+        return position.y + '_' + position.x;
     }
 
     removePoint(point) {
-        this._points[this.getIndex(point.position)] = undefined;
+      delete this._points[this.getIndex(point.position)];
     }
 
 }
