@@ -10,6 +10,7 @@ let constants = require('./../utils/constants');
 let Inventory = require('./../inventory/inventory');
 let config = require('../config');
 let hash = require('object-hash');
+let utils = require('./../utils/utils')
 let InfiniteBoundaries = require('./../garden/infinite-boundaries');
 
 module.exports = class Game {
@@ -52,10 +53,17 @@ module.exports = class Game {
 
     broadcastUpdateGrid() {
         let grid = this.garden.getRawGrid();
-        let hashGrid = hash(grid)
-        if(hashGrid !== this.lastHashGrid) {
+        console.log("before");
+        console.log(grid);
+        let hashedGrid = this.hashAllElement(grid);
+        console.log("after");
+        console.log(grid);
+        console.log("grid with hash");
+        console.log(hashedGrid);
+        let hashGrid = hash(hashedGrid)
+        if (hashGrid !== this.lastHashGrid) {
             this.players.forEach((player) => {
-                player.updateGrid(grid);
+                player.updateGrid(hashedGrid);
             });
             this.lastHashGrid = hashGrid;
         }
@@ -64,6 +72,14 @@ module.exports = class Game {
             player.sendInventory();
         });
 
+    }
+
+    hashAllElement(grid) {
+        return grid.map((e) => {
+            let cloned = utils.clone(e);
+            cloned.hash = hash(e);
+            return cloned;
+        });
     }
 
     addGridElement(gardenElement) {    // TODO rename this method

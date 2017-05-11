@@ -22,7 +22,7 @@ module.exports = {
         garden: {
             plant: {
                 collected : {
-                    minAgeToBeCollected: 30,
+                    minAgeToBeCollected: 5,
                     skillCoeffToBeCollected: 10
                 },
                 maxGrowth:20
@@ -31,7 +31,7 @@ module.exports = {
         player: {
             max: 4,
             inventory: {
-                initialStock: [{'attack': 1}, {'defense': 1}, {'fertility': 1}, {'victory': 1}, {'growth': 10}],
+                initialStock: [{'attack': 1}, {'defense': 1}, {'fertility': 1}, {'victory': 1}, {'growth': 1}],
                 maxStock: 20
             }
         }
