@@ -73,14 +73,14 @@ module.exports = class Player {
         this.sendInventory();
     }
 
-    onRemoveSeed(seedId) {
-        console.log("remove seed ", seedId);
-        this._garden.removePlant(seedId);
+    onRemoveSeed(args) {
+        console.log("remove seed ", args.seedId);
+        this._garden.removePlant(args.seedId);
         this.game.broadcastUpdateGrid();
     }
 
-    onChangeSeedDirection(seedId, direction) {
-        this._garden.changePlantDirection(seedId, direction);
+    onChangeSeedDirection(args) {
+        this._garden.changePlantDirection(args.seedId, args.direction);
         this.game.broadcastUpdateGrid();
     }
 

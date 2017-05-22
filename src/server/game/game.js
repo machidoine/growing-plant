@@ -53,13 +53,7 @@ module.exports = class Game {
 
     broadcastUpdateGrid() {
         let grid = this.garden.getRawGrid();
-        console.log("before");
-        console.log(grid);
         let hashedGrid = this.hashAllElement(grid);
-        console.log("after");
-        console.log(grid);
-        console.log("grid with hash");
-        console.log(hashedGrid);
         let hashGrid = hash(hashedGrid)
         if (hashGrid !== this.lastHashGrid) {
             this.players.forEach((player) => {

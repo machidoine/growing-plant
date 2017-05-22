@@ -79,6 +79,7 @@ module.exports = class Garden {
 
 
     removeAllPlantElement(plant) {
+        console.log('removeAllPlantElement', plant);
         plant.bodies.forEach((body) => {
             this._plantLayer.removeElement(body);
         });
