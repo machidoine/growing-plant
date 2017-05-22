@@ -6,6 +6,7 @@
 let RemoteEventHandler = require('./remote-event-handler');
 let SeedLab = require('../inventory/seed-lab');
 let hash = require('object-hash');
+let utils = require('./../utils/utils');
 
 module.exports = class Player {
     constructor(settings) {
@@ -31,8 +32,18 @@ module.exports = class Player {
     }
 
     updateGrid(grid) {
-        this._remoteEventHandler.sendEvent.gridElementReceive({seeds : grid}); // TODO ce ne sont pas des seeds, il faudra le changer
+        let hashedGrid = this.hashAllElement(grid);
+        this._remoteEventHandler.sendEvent.gridElementReceive({seeds : hashedGrid}); // TODO ce ne sont pas des seeds, il faudra le changer
     }
+
+    hashAllElement(grid) {
+        return grid.map((e) => {
+            let cloned = utils.clone(e);
+            cloned.hash = hash(e);
+            return cloned;
+        });
+    }
+
 
     sendInventory() {
         let stock = this._inventory.stock;
@@ -75,7 +86,7 @@ module.exports = class Player {
 
     onRemoveSeed(args) {
         console.log("remove seed ", args.seedId);
-        this._garden.removePlant(args.seedId);
+        this._garden.removePlant(args.seedId, this._team);
         this.game.broadcastUpdateGrid();
     }
 

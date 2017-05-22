@@ -37,9 +37,10 @@ module.exports = class Game {
         });
 
         player.sendInventory();
+        // ça devrait être updateGrid, mais le hash des element n'a pas été implémenté ici !!
         player.updateGrid(this.garden.getRawGrid());
-
         this.players.push(player);
+        //this.broadcastUpdateGrid();
     }
 
     startWorldTime() {
@@ -53,11 +54,10 @@ module.exports = class Game {
 
     broadcastUpdateGrid() {
         let grid = this.garden.getRawGrid();
-        let hashedGrid = this.hashAllElement(grid);
-        let hashGrid = hash(hashedGrid)
+        let hashGrid = hash(grid)
         if (hashGrid !== this.lastHashGrid) {
             this.players.forEach((player) => {
-                player.updateGrid(hashedGrid);
+                player.updateGrid(grid);
             });
             this.lastHashGrid = hashGrid;
         }
@@ -66,14 +66,6 @@ module.exports = class Game {
             player.sendInventory();
         });
 
-    }
-
-    hashAllElement(grid) {
-        return grid.map((e) => {
-            let cloned = utils.clone(e);
-            cloned.hash = hash(e);
-            return cloned;
-        });
     }
 
     addGridElement(gardenElement) {    // TODO rename this method

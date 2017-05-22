@@ -66,9 +66,11 @@ module.exports = class Garden {
         return true;
     }
 
-    removePlant(seedId) {
+    removePlant(seedId, team) {
         let plant = this.getPlantById(seedId);
-        if(!plant) return;
+        console.log(plant.seed.team);
+        console.log(team);
+        if(!plant || plant.seed.team != team) return;
         this.removeAllPlantElement(plant);
     }
 
