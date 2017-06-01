@@ -10,8 +10,9 @@ let constants = require('./../utils/constants');
 let Inventory = require('./../inventory/inventory');
 let config = require('../config');
 let hash = require('object-hash');
-let utils = require('./../utils/utils')
+let utils = require('./../utils/utils');
 let InfiniteBoundaries = require('./../garden/infinite-boundaries');
+let Seed = require('./../inventory/seed');
 
 module.exports = class Game {
     constructor() {
@@ -35,6 +36,13 @@ module.exports = class Game {
             team: constants.team[Math.floor(Math.random() * 3)],
             inventory: Inventory.create()
         });
+
+        let seed = Seed.createBySkill({'fertility':1});
+        seed.position = {x:0, y:0};
+        seed.direction = 'up';
+        seed.team = player.team;
+        seed.type = 'seed';
+        this.garden.plant(seed);
 
         player.sendInventory();
         // ça devrait être updateGrid, mais le hash des element n'a pas été implémenté ici !!

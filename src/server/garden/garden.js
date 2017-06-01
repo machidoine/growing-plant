@@ -61,9 +61,16 @@ module.exports = class Garden {
 
     addSeed(seed) {
         let gardeners = this._layerContainer.getGardenerAt(seed.position);
-        gardeners.plant(seed);
+        return gardeners.doIfFertile(seed, () => {
+           this.plant(seed);
+            return true;
+        });
+    }
 
-        return true;
+    plant(seed) {
+        let plant = this.gardenElementFactory.createPlant(seed);
+        this.plantLayer.addElement(plant);
+        this.plants.push(plant);
     }
 
     removePlant(seedId, team) {

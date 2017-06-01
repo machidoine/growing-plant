@@ -14,6 +14,4 @@ module.exports = class PlantGardener extends Gardener {
         }
     }
 
-    plant(seed) {}
-
 }

@@ -109,4 +109,8 @@ module.exports = class Player {
         this._inventory.addAll(seeds);
         this.sendInventory();
     }
+
+    get team() {
+        return this._team;
+    }
 }

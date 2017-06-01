@@ -13,10 +13,8 @@ module.exports = class Gardener {
         plant.grow();
     }
 
-    plant(seed) {
-        let plant = this._garden.gardenElementFactory.createPlant(seed);
-        this._garden.plantLayer.addElement(plant);
-        this._garden.plants.push(plant);
+    doIfFertile(seed, callback) {
+        return false;
     }
 
     get garden() {

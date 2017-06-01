@@ -15,8 +15,4 @@ module.exports = class BodyGardener extends Gardener {
         }
     }
 
-    plant(seed) {}
-
-    addStem(stemData) {}
-
 }
