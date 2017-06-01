@@ -38,7 +38,7 @@ module.exports = class Game {
         });
 
         let seed = Seed.createBySkill({'fertility':1});
-        seed.position = {x:0, y:0};
+        seed.position = {x:Math.floor(Math.random() * 15), y:Math.floor(Math.random() * 15)};
         seed.direction = 'up';
         seed.team = player.team;
         seed.type = 'seed';

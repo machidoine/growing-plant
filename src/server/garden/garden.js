@@ -81,9 +81,11 @@ module.exports = class Garden {
         this.removeAllPlantElement(plant);
     }
 
-    changePlantDirection(seedId, direction) {
+    changePlantDirection(seedId, direction, team) {
         let plant = this.getPlantById(seedId);
-        plant.direction = direction;
+        if(plant.seed.team === team) {
+            plant.direction = direction;
+        }
     }
 
 

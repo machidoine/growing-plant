@@ -91,7 +91,7 @@ module.exports = class Player {
     }
 
     onChangeSeedDirection(args) {
-        this._garden.changePlantDirection(args.seedId, args.direction);
+        this._garden.changePlantDirection(args.seedId, args.direction, this.team);
         this.game.broadcastUpdateGrid();
     }
 

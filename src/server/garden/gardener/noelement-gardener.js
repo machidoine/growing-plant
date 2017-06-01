@@ -9,7 +9,7 @@ module.exports = class NoElementGardener extends Gardener {
 
     doIfFertile(seed, callback) {
         return this._garden.plants
-            .filter((p) => p.seed.skills.fertility)
+            .filter((p) => p.seed.skills.fertility && p.seed.team === seed.team)
             .find((plant) => {
                 return this.isInRange(plant.position, plant.seed.skills.fertility || 0, seed.position)
             }) ? callback() : false;
