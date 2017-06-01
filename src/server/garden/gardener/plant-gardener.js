@@ -8,12 +8,12 @@ module.exports = class PlantGardener extends Gardener {
         this._plant = plant;
     }
 
-    workOnPlant(plant) {
-
+    workOnPlant(attacker) {
+        if (attacker.seed.team != this._plant.seed.team) {
+            attacker.attack(this._plant);
+        }
     }
 
     plant(seed) {}
-
-    addStem(stemData) {}
 
 }

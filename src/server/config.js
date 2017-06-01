@@ -31,7 +31,7 @@ module.exports = {
         player: {
             max: 4,
             inventory: {
-                initialStock: [{'attack': 1}, {'defense': 1}, {'fertility': 1}, {'victory': 1}, {'growth': 1}],
+                initialStock: [{'attack': 1}, {'defense': 1}, {'fertility': 1}, {'victory': 1}, {'growth': 10}, {'growth': 10, 'attack':2}, {'growth': 10, 'defense':1}],
                 maxStock: 20
             }
         }

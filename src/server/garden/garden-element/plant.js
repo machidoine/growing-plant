@@ -88,6 +88,14 @@ module.exports = class Plant extends GardenElement {
         });
     }
 
+    attack(plant) {
+        GardenSkillsRules.attack(this, plant);
+    }
+
+    die() {
+        this.garden.removePlant(this.seed.id, this.seed.team);
+    }
+
     get seed() {
         return this._seed;
     }

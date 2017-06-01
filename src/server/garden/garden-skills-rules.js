@@ -10,6 +10,19 @@ module.exports = class GardenSkillsRules {
     constructor() {
     }
 
+    static attack(attacker, defender) {
+        let attackerWin = (attacker.seed.skills.attack || 0) > (defender.seed.skills.defense || 0);
+        let defenderWin = (defender.seed.skills.attack || 0) > (attacker.seed.skills.defense || 0);
+
+        if(attackerWin) {
+            defender.die();
+        }
+
+        if(defenderWin) {
+            attacker.die();
+        }
+    }
+
     static growAged(plant, callback) {
         let growth = plant.seed.skills.growth || 0;
         let age = plant.age;

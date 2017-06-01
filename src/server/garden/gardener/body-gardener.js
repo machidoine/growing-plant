@@ -8,8 +8,11 @@ module.exports = class BodyGardener extends Gardener {
         this._body = body;
     }
 
-    workOnPlant(plant) {
-
+    workOnPlant(attacker) {
+        let sourcePlant = this.garden.getPlantById(this._body.plant.seed.id);
+        if (attacker.seed.team != sourcePlant.seed.team) {
+            attacker.attack(sourcePlant);
+        }
     }
 
     plant(seed) {}
